@@ -1,0 +1,78 @@
+version: '3.9'
+
+x-service: &service
+  profiles: ['dev']
+  build:
+    target: 'base'
+  volumes:
+    - ./:/app
+
+services:
+  kafka:
+    image: docker.io/bitnami/kafka:3.4
+    profiles:
+      - dev
+    ports:
+      - '9092:9092'
+    volumes:
+      - 'kafka_data:/bitnami'
+    environment:
+      - ALLOW_PLAINTEXT_LISTENER=yes
+
+  get_way:
+    <<: *service
+    ports:
+      - '4000:4000'
+    command: ['nest', 'start', '--watch', 'get_way']
+
+  user:
+    <<: *service
+    depends_on:
+      - user_db
+    ports:
+      - '3000:3002'
+    command: ['nest', 'start', '--watch', 'user']
+
+  gateway:
+    profiles:
+      - dev
+    ports:
+      - '8080:8080'
+    build:
+      context: .
+      dockerfile: ./apps/gateway/Dockerfile
+    command: ['run', '--config', '/etc/krakend/krakend.json']
+    volumes:
+      - ./apps/gateway/krakend.json:/etc/krakend/krakend.json
+
+  product:
+    <<: *service
+    depends_on:
+      - product_db
+    ports:
+      - '7000:7000'
+    command: ['nest', 'start', '--watch', 'product']
+
+  user_db:
+    profiles: ['dev']
+    image: postgres
+    ports:
+      - '5441:5432'
+    environment:
+      - POSTGRES_PASSWORD=economic_password
+      - POSTGRES_USER=economic-username
+      - POSTGRES_DB=economic_database
+
+  product_db:
+    profiles: ['dev']
+    image: postgres
+    ports:
+      - '5442:5432'
+    environment:
+      - POSTGRES_PASSWORD=economicProduct_password
+      - POSTGRES_USER=economicProduct_username
+      - POSTGRES_DB=economicProduct_database
+
+volumes:
+  kafka_data:
+    driver: local

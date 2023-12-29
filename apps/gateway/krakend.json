@@ -1,0 +1,772 @@
+{
+  "$schema": "https://www.krakend.io/schema/krakend.json",
+  "version": 3,
+  "name": "KrakenD - API Gateway",
+  "timeout": "30000ms",
+  "cache_ttl": "300s",
+
+  "extra_config": {
+    "router": { "return_error_msg": true },
+
+    "security/cors": {
+      "allow_origins": ["*"],
+
+      "allow_methods": ["POST", "GET", "DELETE", "PUT", "PATCH", "HEAD"],
+      "allow_headers": [
+        "Content-Type",
+        "Content-Length",
+        "Accept",
+        "auth",
+        "Authorization",
+        "User-Agent",
+        "Host",
+        "Origin"
+      ],
+
+      "debug": true,
+
+      "allow_credentials": true,
+      "max_age": "12h"
+    }
+  },
+  "endpoints": [
+    {
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "url_pattern": "/api/users",
+          "method": "POST",
+          "host": ["http://user:3000"],
+          "extra_config": { "backend/http": { "return_error_code": true } }
+        }
+      ],
+
+      "endpoint": "/api/auth/user/create",
+      "method": "POST"
+    },
+
+    {
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "client_max_rate": 20,
+          "every": "1s",
+          "strategy": "ip"
+        }
+      },
+      "output_encoding": "json",
+      "backend": [
+        {
+          "url_pattern": "/api/users/login",
+          "method": "POST",
+          "encoding": "json",
+          "host": ["http://user:3000"],
+          "extra_config": { "backend/http": { "return_error_code": true } }
+        }
+      ],
+
+      "endpoint": "/api/auth/user/login",
+      "method": "POST"
+    },
+
+    {
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "client_max_rate": 20,
+          "every": "1s",
+          "strategy": "ip"
+        }
+      },
+      "output_encoding": "no-op",
+      "input_headers": [
+        "auth",
+        "User-Agent",
+        "Accept",
+        "Authorization",
+        "Content-Type",
+        "Content-Length"
+      ],
+      "backend": [
+        {
+          "url_pattern": "/api/users",
+          "method": "GET",
+
+          "host": ["http://user:3000"],
+          "extra_config": { "backend/http": { "return_error_code": true } }
+        }
+      ],
+
+      "endpoint": "/api/auth/user/me",
+      "method": "GET"
+    },
+
+    {
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "client_max_rate": 20,
+          "every": "1s",
+          "strategy": "ip"
+        }
+      },
+      "output_encoding": "no-op",
+      "input_headers": [
+        "auth",
+        "User-Agent",
+        "Accept",
+        "Authorization",
+        "Content-Type",
+        "Content-Length"
+      ],
+      "backend": [
+        {
+          "url_pattern": "/api/users/refresh/token",
+          "method": "POST",
+
+          "host": ["http://user:3000"],
+          "extra_config": { "backend/http": { "return_error_code": true } }
+        }
+      ],
+
+      "endpoint": "/api/auth/user/refresh",
+      "method": "POST"
+    },
+
+    {
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "client_max_rate": 20,
+          "every": "1s",
+          "strategy": "ip"
+        }
+      },
+      "output_encoding": "no-op",
+      "input_headers": [
+        "auth",
+        "User-Agent",
+        "Accept",
+        "Authorization",
+        "Content-Type",
+        "Content-Length"
+      ],
+      "backend": [
+        {
+          "url_pattern": "/api/users/update",
+          "method": "PATCH",
+
+          "host": ["http://user:3000"],
+          "extra_config": { "backend/http": { "return_error_code": true } }
+        }
+      ],
+
+      "endpoint": "/api/auth/user/update/img",
+      "method": "PATCH"
+    },
+
+    {
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "client_max_rate": 20,
+          "every": "1s",
+          "strategy": "ip"
+        }
+      },
+      "output_encoding": "no-op",
+      "input_headers": [
+        "auth",
+        "User-Agent",
+        "Accept",
+        "Authorization",
+        "Content-Type",
+        "Content-Length"
+      ],
+      "backend": [
+        {
+          "url_pattern": "/api/users",
+          "method": "PATCH",
+
+          "host": ["http://user:3000"],
+          "extra_config": { "backend/http": { "return_error_code": true } }
+        }
+      ],
+
+      "endpoint": "/api/auth/update",
+      "method": "PATCH"
+    },
+
+    {
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "client_max_rate": 20,
+          "every": "1s",
+          "strategy": "ip"
+        }
+      },
+      "output_encoding": "no-op",
+
+      "input_headers": [
+        "auth",
+        "User-Agent",
+        "Accept",
+        "Content-Type",
+        "Content-Length"
+      ],
+
+      "input_query_strings": ["category"],
+      "backend": [
+        {
+          "url_pattern": "/api/orders",
+          "method": "GET",
+
+          "host": ["http://product:7000"],
+          "extra_config": { "backend/http": { "return_error_code": true } }
+        }
+      ],
+
+      "endpoint": "/api/order",
+
+      "method": "GET"
+    },
+
+    {
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "client_max_rate": 20,
+          "every": "1s",
+          "strategy": "ip"
+        }
+      },
+      "output_encoding": "no-op",
+      "input_headers": [
+        "Authorization",
+        "auth",
+        "Auth",
+        "User-Agent",
+        "Accept",
+        "Content-Type",
+        "Content-Length"
+      ],
+      "backend": [
+        {
+          "url_pattern": "api/orders/create",
+          "method": "POST",
+
+          "host": ["http://product:7000"],
+          "extra_config": { "backend/http": { "return_error_code": true } }
+        }
+      ],
+
+      "endpoint": "/api/order/create",
+      "method": "POST"
+    },
+
+    {
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "client_max_rate": 20,
+          "every": "1s",
+          "strategy": "ip"
+        }
+      },
+      "output_encoding": "no-op",
+      "input_headers": [
+        "Authorization",
+        "auth",
+        "Auth",
+        "User-Agent",
+        "Accept",
+        "Content-Type",
+        "Content-Length"
+      ],
+      "backend": [
+        {
+          "url_pattern": "api/orders/all/orders",
+          "method": "GET",
+
+          "host": ["http://product:7000"],
+          "extra_config": { "backend/http": { "return_error_code": true } }
+        }
+      ],
+
+      "endpoint": "/api/order/all",
+      "method": "GET"
+    },
+
+    {
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "client_max_rate": 20,
+          "every": "1s",
+          "strategy": "ip"
+        }
+      },
+      "output_encoding": "no-op",
+      "input_headers": [
+        "Authorization",
+        "auth",
+        "Auth",
+        "User-Agent",
+        "Accept",
+        "Content-Type",
+        "Content-Length"
+      ],
+      "backend": [
+        {
+          "url_pattern": "api/events/all/event",
+          "method": "GET",
+
+          "host": ["http://product:7000"],
+          "extra_config": { "backend/http": { "return_error_code": true } }
+        }
+      ],
+
+      "endpoint": "/api/events/all",
+      "method": "GET"
+    },
+
+    {
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "client_max_rate": 20,
+          "every": "1s",
+          "strategy": "ip"
+        }
+      },
+      "output_encoding": "no-op",
+      "input_headers": [
+        "Authorization",
+        "auth",
+        "Auth",
+        "User-Agent",
+        "Accept",
+        "Content-Type",
+        "Content-Length"
+      ],
+      "backend": [
+        {
+          "url_pattern": "api/orders/all/userId",
+          "method": "GET",
+
+          "host": ["http://product:7000"],
+          "extra_config": { "backend/http": { "return_error_code": true } }
+        }
+      ],
+
+      "endpoint": "/api/order/userId",
+      "method": "GET"
+    },
+
+    {
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "client_max_rate": 20,
+          "every": "1s",
+          "strategy": "ip"
+        }
+      },
+      "output_encoding": "no-op",
+      "input_headers": [
+        "Authorization",
+        "auth",
+        "Auth",
+        "User-Agent",
+        "Accept",
+        "Content-Type",
+        "Content-Length"
+      ],
+      "backend": [
+        {
+          "url_pattern": "api/events",
+          "method": "POST",
+
+          "host": ["http://product:7000"],
+          "extra_config": { "backend/http": { "return_error_code": true } }
+        }
+      ],
+
+      "endpoint": "/api/event",
+      "method": "POST"
+    },
+
+    {
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "client_max_rate": 20,
+          "every": "1s",
+          "strategy": "ip"
+        }
+      },
+      "output_encoding": "no-op",
+      "input_headers": [
+        "Authorization",
+        "auth",
+        "Auth",
+        "User-Agent",
+        "Accept",
+        "Content-Type",
+        "Content-Length"
+      ],
+      "backend": [
+        {
+          "url_pattern": "api/orders/{id}",
+          "method": "PATCH",
+          "host": ["http://product:7000"],
+          "extra_config": { "backend/http": { "return_error_code": true } }
+        }
+      ],
+
+      "endpoint": "/api/order/update/{id}",
+      "method": "PATCH"
+    },
+
+    {
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "client_max_rate": 20,
+          "every": "1s",
+          "strategy": "ip"
+        }
+      },
+      "output_encoding": "no-op",
+      "input_headers": [
+        "Authorization",
+        "auth",
+        "Auth",
+        "User-Agent",
+        "Accept",
+        "Content-Type",
+        "Content-Length"
+      ],
+      "backend": [
+        {
+          "url_pattern": "api/orders/updateImg/{id}",
+          "method": "PATCH",
+          "host": ["http://product:7000"],
+          "extra_config": { "backend/http": { "return_error_code": true } }
+        }
+      ],
+
+      "endpoint": "/api/order/update/img/{id}",
+      "method": "PATCH"
+    },
+
+    {
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "client_max_rate": 20,
+          "every": "1s",
+          "strategy": "ip"
+        }
+      },
+      "input_headers": [
+        "Authorization",
+        "auth",
+        "Auth",
+        "User-Agent",
+        "Accept",
+        "Content-Type",
+        "Content-Length"
+      ],
+      "output_encoding": "no-op",
+      "input_query_strings": ["id"],
+      "backend": [
+        {
+          "url_pattern": "api/events/{id}",
+          "method": "PATCH",
+          "host": ["http://product:7000"],
+          "extra_config": { "backend/http": { "return_error_code": true } }
+        }
+      ],
+
+      "endpoint": "/api/events/update/{id}",
+      "method": "PATCH"
+    },
+
+    {
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "client_max_rate": 20,
+          "every": "1s",
+          "strategy": "ip"
+        }
+      },
+      "input_headers": [
+        "Authorization",
+        "auth",
+        "Auth",
+        "User-Agent",
+        "Accept",
+        "Content-Type",
+        "Content-Length"
+      ],
+      "output_encoding": "no-op",
+      "input_query_strings": ["id"],
+      "backend": [
+        {
+          "url_pattern": "api/events/updateImg/{id}",
+          "method": "PATCH",
+          "host": ["http://product:7000"],
+          "extra_config": { "backend/http": { "return_error_code": true } }
+        }
+      ],
+
+      "endpoint": "/api/events/update/img/{id}",
+      "method": "PATCH"
+    },
+
+    {
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "client_max_rate": 20,
+          "every": "1s",
+          "strategy": "ip"
+        }
+      },
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "url_pattern": "api/orders/{id}",
+          "method": "DELETE",
+
+          "host": ["http://product:7000"],
+          "extra_config": { "backend/http": { "return_error_code": true } }
+        }
+      ],
+
+      "endpoint": "/api/order/{id}",
+      "method": "DELETE"
+    },
+
+    {
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "client_max_rate": 20,
+          "every": "1s",
+          "strategy": "ip"
+        }
+      },
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "url_pattern": "api/events/{id}",
+          "method": "DELETE",
+
+          "host": ["http://product:7000"],
+          "extra_config": { "backend/http": { "return_error_code": true } }
+        }
+      ],
+
+      "endpoint": "/api/event/{id}",
+      "method": "DELETE"
+    },
+
+    {
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "client_max_rate": 20,
+          "every": "1s",
+          "strategy": "ip"
+        }
+      },
+      "output_encoding": "no-op",
+      "input_headers": [
+        "Authorization",
+        "auth",
+        "Auth",
+        "User-Agent",
+        "Accept",
+        "Content-Type",
+        "Content-Length"
+      ],
+
+      "backend": [
+        {
+          "url_pattern": "api/restaurants/create",
+          "method": "POST",
+
+          "host": ["http://product:7000"]
+        }
+      ],
+
+      "endpoint": "/api/restaurant/create",
+      "method": "POST"
+    },
+
+    {
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "client_max_rate": 20,
+          "every": "1s",
+          "strategy": "ip"
+        }
+      },
+      "output_encoding": "no-op",
+      "input_headers": [
+        "Authorization",
+        "auth",
+        "Auth",
+        "User-Agent",
+        "Accept",
+        "Content-Type",
+        "Content-Length"
+      ],
+
+      "backend": [
+        {
+          "url_pattern": "api/orders/{id}",
+          "method": "GET",
+          "host": ["http://product:7000"]
+        }
+      ],
+
+      "endpoint": "/api/order/get/{id}",
+      "method": "GET",
+      "input_query_strings": ["id"]
+    },
+
+    {
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "client_max_rate": 20,
+          "every": "1s",
+          "strategy": "ip"
+        }
+      },
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "url_pattern": "api/restaurants/{id}",
+          "method": "GET",
+
+          "host": ["http://product:7000"]
+        }
+      ],
+
+      "endpoint": "/api/restaurant/{id}",
+      "method": "GET",
+      "input_query_strings": ["id"]
+    },
+
+    {
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "client_max_rate": 20,
+          "every": "1s",
+          "strategy": "ip"
+        }
+      },
+      "output_encoding": "no-op",
+      "input_headers": [
+        "Authorization",
+        "auth",
+        "Auth",
+        "User-Agent",
+        "Accept",
+        "Content-Type",
+        "Content-Length"
+      ],
+      "backend": [
+        {
+          "url_pattern": "api/restaurants/update/{id}",
+          "method": "PATCH",
+
+          "host": ["http://product:7000"]
+        }
+      ],
+
+      "endpoint": "/api/restaurant/update/{id}",
+      "method": "PATCH"
+    },
+
+    {
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "client_max_rate": 20,
+          "every": "1s",
+          "strategy": "ip"
+        }
+      },
+      "input_headers": [
+        "Authorization",
+        "auth",
+        "Auth",
+        "User-Agent",
+        "Accept",
+        "Content-Type",
+        "Content-Length"
+      ],
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "url_pattern": "api/restaurants/{id}",
+          "method": "GET",
+
+          "host": ["http://product:7000"]
+        }
+      ],
+
+      "endpoint": "/api/auth/restaurant/{id}",
+      "method": "GET"
+    },
+
+    {
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "client_max_rate": 20,
+          "every": "1s",
+          "strategy": "ip"
+        }
+      },
+      "input_headers": [
+        "Authorization",
+        "auth",
+        "Auth",
+        "User-Agent",
+        "Accept",
+        "Content-Type",
+        "Content-Length"
+      ],
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "url_pattern": "api/events",
+          "method": "GET",
+
+          "host": ["http://product:7000"]
+        }
+      ],
+
+      "endpoint": "/api/event",
+      "method": "GET"
+    },
+
+    {
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "client_max_rate": 20,
+          "every": "1s",
+          "strategy": "ip"
+        }
+      },
+      "output_encoding": "no-op",
+      "input_headers": [
+        "Authorization",
+        "auth",
+        "Auth",
+        "User-Agent",
+        "Accept",
+        "Content-Type",
+        "Content-Length"
+      ],
+
+      "backend": [
+        {
+          "url_pattern": "api/restaurants/all/restaurants",
+          "method": "GET",
+          "host": ["http://product:7000"]
+        }
+      ],
+
+      "endpoint": "/api/restaurants/all",
+      "method": "GET"
+    }
+  ]
+}
