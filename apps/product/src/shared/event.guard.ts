@@ -11,17 +11,16 @@ export class EventGuard {
       const request = context.switchToHttp().getRequest();
       const id = request.params.id;
       const userId = request.user.id;
-      const b = await this.commandBus.execute(
+      const result = await this.commandBus.execute(
         new GetOneEventCommand({ id: id }),
       );
 
-      if (b.userId !== userId) {
+      if (result.userId !== userId) {
         return false;
       }
 
       return true;
     } catch (err) {
-      Logger.error('Unknown error in guard', { err });
       return false;
     }
   }

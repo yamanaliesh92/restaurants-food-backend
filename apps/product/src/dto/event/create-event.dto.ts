@@ -1,25 +1,38 @@
 import { Transform } from 'class-transformer';
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsDate, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
-interface CreateOrderData {
+interface CreateEventData {
   name: string;
   restaurantId: number;
-  price: number;
+  newPrice: number;
+  oldPrice: number;
+  date: Date;
   description: string;
   category: string;
 }
 
-export class CreateOrderDto {
+export class CreateEventDto {
   @IsString()
   @IsNotEmpty()
   description: string;
+
+  @IsDate()
+  @IsNotEmpty()
+  date: Date;
 
   @IsNumber()
   @IsNotEmpty()
   @Transform(({ value }) => {
     return Number(value);
   })
-  price: number;
+  oldPrice: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  @Transform(({ value }) => {
+    return Number(value);
+  })
+  newPrice: number;
 
   @IsString()
   @IsNotEmpty()
@@ -35,12 +48,14 @@ export class CreateOrderDto {
   @IsString()
   @IsNotEmpty()
   name: string;
-  constructor(data: CreateOrderData) {
+  constructor(data: CreateEventData) {
     if (data) {
       this.description = data.description;
       this.name = data.name;
       this.restaurantId = data.restaurantId;
-      this.price = data.price;
+      this.date = data.date;
+      this.oldPrice = data.oldPrice;
+      this.newPrice = data.newPrice;
       this.category = data.category;
     }
   }

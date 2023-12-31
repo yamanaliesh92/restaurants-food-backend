@@ -5,7 +5,6 @@ import {
   Delete,
   Get,
   InternalServerErrorException,
-  Logger,
   Param,
   Patch,
   Post,
@@ -27,6 +26,7 @@ import { GetAllEventsCommandByUserId } from './command/get-my-all-event/get.my.a
 import { AxiosApplicationException } from './error/axios.applaction.exception';
 import { UpdateImgEventCommand } from './command/update-img-event/update.img.event.command';
 import { EventGuard } from './shared/event.guard';
+import { CreateEventDto } from './dto/event/create-event.dto';
 
 @Controller('api/events')
 export class EventsController {
@@ -51,7 +51,6 @@ export class EventsController {
     @Param('id') id: number,
     @UploadedFile() img: Express.Multer.File,
   ) {
-    // Logger.log('file', { img });
     try {
       return this.commandbus.execute(
         new UpdateImgEventCommand({
@@ -123,7 +122,7 @@ export class EventsController {
   @Post()
   @UseInterceptors(FileInterceptor('imgOrder'))
   async createOrder(
-    @Body() body: CreateEventCommand,
+    @Body() body: CreateEventDto,
     @UploadedFile() img: Express.Multer.File,
     @Req() user: IRequest,
   ) {

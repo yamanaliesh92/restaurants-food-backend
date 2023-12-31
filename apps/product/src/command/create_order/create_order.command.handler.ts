@@ -38,9 +38,9 @@ export class CreateOrderCommandHandler
       fromDate.append('description', description);
 
       fromDate.append('name', name);
-      fromDate.append('userId', userId as any);
-      fromDate.append('price', price as any);
-      fromDate.append('restaurantId', restaurantId as any);
+      fromDate.append('userId', String(userId));
+      fromDate.append('price', String(price));
+      fromDate.append('restaurantId', String(restaurantId));
 
       const { data } = await lastValueFrom(
         this.http.post(
@@ -48,8 +48,6 @@ export class CreateOrderCommandHandler
           fromDate,
         ),
       );
-
-      const displayUrl = data?.data?.display_url;
 
       const model: CreateOrderEntityDto = {
         name: command.name,
@@ -61,7 +59,7 @@ export class CreateOrderCommandHandler
         imgOrder: data.data?.display_url,
       };
       const result = await this.orderdoa.save(model);
-      Logger.log('model', result);
+
       return this.model.OrderToDto(result);
     } catch (err) {
       if (err instanceof AxiosError) {

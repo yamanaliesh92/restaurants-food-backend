@@ -1,5 +1,5 @@
 import { HttpService } from '@nestjs/axios';
-import { Logger } from '@nestjs/common';
+
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { AxiosError } from 'axios';
 
@@ -44,11 +44,11 @@ export class CreateEventCommandHandler
       fromDate.append('description', description);
 
       fromDate.append('name', name);
-      fromDate.append('userId', userId as any);
-      fromDate.append('newPrice', newPrice as any);
-      fromDate.append('oldPrice', oldPrice as any);
-      fromDate.append('date', date as any);
-      fromDate.append('restaurantId', restaurantId as any);
+      fromDate.append('userId', String(userId));
+      fromDate.append('newPrice', String(newPrice));
+      fromDate.append('oldPrice', String(oldPrice));
+      fromDate.append('date', String(date));
+      fromDate.append('restaurantId', String(restaurantId));
 
       const { data } = await lastValueFrom(
         this.http.post(
@@ -56,9 +56,6 @@ export class CreateEventCommandHandler
           fromDate,
         ),
       );
-
-      const displayUrl = data?.data?.display_url;
-      Logger.log('display', { displayUrl });
 
       const model: CreateEventEntityDto = {
         name: command.name,

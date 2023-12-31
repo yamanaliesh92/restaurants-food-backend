@@ -14,7 +14,7 @@ export interface IRequest {
   };
 }
 
-const Header_Name = 'auth';
+const Header_Name = 'authorization';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

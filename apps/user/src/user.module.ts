@@ -22,28 +22,7 @@ import { UserController } from './user.controller';
 import { UserService } from './user.service';
 
 @Module({
-  imports: [
-    CqrsModule,
-    HttpModule,
-    DbUserModule,
-
-    ClientsModule.register([
-      {
-        name: 'USER_SERVICE',
-        transport: Transport.KAFKA,
-        options: {
-          // producer: { createPartitioner: Partitioners.LegacyPartitioner },
-          client: {
-            clientId: 'USER_SERVICE',
-            brokers: ['kafka:9092'],
-          },
-          consumer: {
-            groupId: 'nest-group',
-          },
-        },
-      },
-    ]),
-  ],
+  imports: [CqrsModule, HttpModule, DbUserModule],
   controllers: [UserController],
   providers: [
     UserService,

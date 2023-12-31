@@ -16,8 +16,9 @@
         "Content-Type",
         "Content-Length",
         "Accept",
-        "auth",
-        "Authorization",
+
+        "authorization",
+
         "User-Agent",
         "Host",
         "Origin"
@@ -78,10 +79,11 @@
       },
       "output_encoding": "no-op",
       "input_headers": [
-        "auth",
         "User-Agent",
         "Accept",
-        "Authorization",
+
+        "authorization",
+
         "Content-Type",
         "Content-Length"
       ],
@@ -109,10 +111,9 @@
       },
       "output_encoding": "no-op",
       "input_headers": [
-        "auth",
         "User-Agent",
         "Accept",
-        "Authorization",
+        "authorization",
         "Content-Type",
         "Content-Length"
       ],
@@ -140,10 +141,10 @@
       },
       "output_encoding": "no-op",
       "input_headers": [
-        "auth",
         "User-Agent",
         "Accept",
-        "Authorization",
+
+        "authorization",
         "Content-Type",
         "Content-Length"
       ],
@@ -171,10 +172,10 @@
       },
       "output_encoding": "no-op",
       "input_headers": [
-        "auth",
         "User-Agent",
         "Accept",
-        "Authorization",
+        "authorization",
+
         "Content-Type",
         "Content-Length"
       ],
@@ -203,9 +204,9 @@
       "output_encoding": "no-op",
 
       "input_headers": [
-        "auth",
         "User-Agent",
         "Accept",
+        "authorization",
         "Content-Type",
         "Content-Length"
       ],
@@ -236,9 +237,8 @@
       },
       "output_encoding": "no-op",
       "input_headers": [
-        "Authorization",
-        "auth",
-        "Auth",
+        "authorization",
+
         "User-Agent",
         "Accept",
         "Content-Type",
@@ -268,9 +268,8 @@
       },
       "output_encoding": "no-op",
       "input_headers": [
-        "Authorization",
-        "auth",
-        "Auth",
+        "authorization",
+
         "User-Agent",
         "Accept",
         "Content-Type",
@@ -300,10 +299,8 @@
       },
       "output_encoding": "no-op",
       "input_headers": [
-        "Authorization",
-        "auth",
-        "Auth",
         "User-Agent",
+        "authorization",
         "Accept",
         "Content-Type",
         "Content-Length"
@@ -332,9 +329,7 @@
       },
       "output_encoding": "no-op",
       "input_headers": [
-        "Authorization",
-        "auth",
-        "Auth",
+        "authorization",
         "User-Agent",
         "Accept",
         "Content-Type",
@@ -364,12 +359,10 @@
       },
       "output_encoding": "no-op",
       "input_headers": [
-        "Authorization",
-        "auth",
-        "Auth",
         "User-Agent",
         "Accept",
         "Content-Type",
+        "authorization",
         "Content-Length"
       ],
       "backend": [
@@ -396,9 +389,7 @@
       },
       "output_encoding": "no-op",
       "input_headers": [
-        "Authorization",
-        "auth",
-        "Auth",
+        "authorization",
         "User-Agent",
         "Accept",
         "Content-Type",
@@ -427,11 +418,9 @@
       },
       "output_encoding": "no-op",
       "input_headers": [
-        "Authorization",
-        "auth",
-        "Auth",
         "User-Agent",
         "Accept",
+        "authorization",
         "Content-Type",
         "Content-Length"
       ],
@@ -457,9 +446,7 @@
         }
       },
       "input_headers": [
-        "Authorization",
-        "auth",
-        "Auth",
+        "authorization",
         "User-Agent",
         "Accept",
         "Content-Type",
@@ -489,9 +476,7 @@
         }
       },
       "input_headers": [
-        "Authorization",
-        "auth",
-        "Auth",
+        "authorization",
         "User-Agent",
         "Accept",
         "Content-Type",
@@ -521,6 +506,13 @@
         }
       },
       "output_encoding": "no-op",
+      "input_headers": [
+        "User-Agent",
+        "authorization",
+        "Accept",
+        "Content-Type",
+        "Content-Length"
+      ],
       "backend": [
         {
           "url_pattern": "api/orders/{id}",
@@ -544,6 +536,13 @@
         }
       },
       "output_encoding": "no-op",
+      "input_headers": [
+        "User-Agent",
+        "authorization",
+        "Accept",
+        "Content-Type",
+        "Content-Length"
+      ],
       "backend": [
         {
           "url_pattern": "api/events/{id}",
@@ -568,10 +567,8 @@
       },
       "output_encoding": "no-op",
       "input_headers": [
-        "Authorization",
-        "auth",
-        "Auth",
         "User-Agent",
+        "authorization",
         "Accept",
         "Content-Type",
         "Content-Length"
@@ -600,9 +597,8 @@
       },
       "output_encoding": "no-op",
       "input_headers": [
-        "Authorization",
-        "auth",
-        "Auth",
+        "authorization",
+
         "User-Agent",
         "Accept",
         "Content-Type",
@@ -631,6 +627,13 @@
         }
       },
       "output_encoding": "no-op",
+      "input_headers": [
+        "authorization",
+        "User-Agent",
+        "Accept",
+        "Content-Type",
+        "Content-Length"
+      ],
       "backend": [
         {
           "url_pattern": "api/restaurants/{id}",
@@ -655,9 +658,7 @@
       },
       "output_encoding": "no-op",
       "input_headers": [
-        "Authorization",
-        "auth",
-        "Auth",
+        "authorization",
         "User-Agent",
         "Accept",
         "Content-Type",
@@ -685,10 +686,8 @@
         }
       },
       "input_headers": [
-        "Authorization",
-        "auth",
-        "Auth",
         "User-Agent",
+        "authorization",
         "Accept",
         "Content-Type",
         "Content-Length"
@@ -716,11 +715,9 @@
         }
       },
       "input_headers": [
-        "Authorization",
-        "auth",
-        "Auth",
         "User-Agent",
         "Accept",
+        "authorization",
         "Content-Type",
         "Content-Length"
       ],
@@ -748,9 +745,7 @@
       },
       "output_encoding": "no-op",
       "input_headers": [
-        "Authorization",
-        "auth",
-        "Auth",
+        "authorization",
         "User-Agent",
         "Accept",
         "Content-Type",

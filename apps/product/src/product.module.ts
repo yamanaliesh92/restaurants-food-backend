@@ -32,26 +32,7 @@ import { UpdateRestaurantInfoCommandHandler } from './command/update-resturant/u
 import { GetOneEventCommandHandler } from './command/get-one-event/get-one.event.command.handler';
 
 @Module({
-  imports: [
-    DbProductModule,
-    HttpModule,
-    CqrsModule,
-    ClientsModule.register([
-      {
-        name: 'AUTH_MICROSERVICE',
-        transport: Transport.KAFKA,
-        options: {
-          client: {
-            clientId: 'product',
-            brokers: ['kafka:9092'],
-          },
-          consumer: {
-            groupId: 'auth_id12',
-          },
-        },
-      },
-    ]),
-  ],
+  imports: [DbProductModule, HttpModule, CqrsModule],
   controllers: [OrdersController, ResController, EventsController],
   providers: [
     ProductService,

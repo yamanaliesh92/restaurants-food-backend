@@ -14,7 +14,7 @@ export interface IRequest {
   };
 }
 
-const Header_Name = 'auth';
+const Header_Name = 'authorization';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -22,11 +22,9 @@ export class AuthGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-    Logger.log('res', request);
 
     const token = request.headers[Header_Name];
 
-    Logger.log('token', token);
     if (!token) {
       throw new UnauthorizedException();
     }
