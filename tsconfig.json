@@ -41,6 +41,12 @@
       ],
       "no/sh/*": [
         "libs/sh/src/*"
+      ],
+      "y/lib": [
+        "libs/lib/src"
+      ],
+      "y/lib/*": [
+        "libs/lib/src/*"
       ]
     }
   }

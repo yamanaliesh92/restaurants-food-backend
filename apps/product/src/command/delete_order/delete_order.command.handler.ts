@@ -10,7 +10,7 @@ export class DeleteOrderCommandHandler
 {
   constructor(private readonly orderdoa: OrderDoa) {}
 
-  async execute(command: DeleteOrderCommand): Promise<any> {
+  async execute(command: DeleteOrderCommand): Promise<boolean> {
     try {
       return await this.orderdoa.delete(command.id);
     } catch (err) {

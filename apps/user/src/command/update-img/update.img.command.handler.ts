@@ -23,7 +23,7 @@ export class UpdateImgCommandHandler
     private readonly http: HttpService,
   ) {}
 
-  async execute(command: UpdateImgCommand) {
+  async execute(command: UpdateImgCommand): Promise<boolean> {
     try {
       const fromDate = new URLSearchParams();
       const img = command.img;

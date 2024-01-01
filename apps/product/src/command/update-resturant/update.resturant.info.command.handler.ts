@@ -14,7 +14,7 @@ export class UpdateRestaurantInfoCommandHandler
 {
   constructor(private readonly res: RestaurantDoa) {}
 
-  async execute(command: UpdateRestaurantInfoCommand) {
+  async execute(command: UpdateRestaurantInfoCommand): Promise<boolean> {
     try {
       return await this.res.update(command.id, {
         address: command.address,

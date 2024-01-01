@@ -10,7 +10,7 @@ export class UpdateOrderCommandHandler
 {
   constructor(private readonly orderDoa: OrderDoa) {}
 
-  async execute(command: UpdateOrderCommand) {
+  async execute(command: UpdateOrderCommand): Promise<boolean> {
     try {
       {
         command.name ? { name: command.name } : {};

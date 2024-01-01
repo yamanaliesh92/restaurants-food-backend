@@ -5,19 +5,17 @@ import {
   Get,
   InternalServerErrorException,
   Logger,
-  Param,
   Patch,
   Post,
   Req,
   UploadedFile,
   UseGuards,
   UseInterceptors,
-  ValidationPipe,
 } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
+
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ChangePasswordCommand } from './command/change_password/change_password.command';
+import { AuthGuard, IRequest } from 'y/lib/shared/auth.Guard';
 
 import { CreateUserCommand } from './command/create_User/create_User.command';
 
@@ -32,7 +30,6 @@ import { UpdateUserNameDto } from './dto/update.usernaem.dto';
 import { AxiosErrorApplicationException } from './error/axios.application.exception';
 import { UserNotFoundApplicationException } from './error/user-not-found.apllication.exception';
 import { UserAlreadyExistApplicationException } from './error/user.alreday.exist.application';
-import { AuthGuard, IRequest } from './shared/userGaurd';
 
 @Controller('/api/users')
 export class UserController {
@@ -115,17 +112,6 @@ export class UserController {
     }
   }
 
-  @EventPattern('update.password')
-  updatePassword(@Payload(ValidationPipe) body: ChangePasswordCommand) {
-    Logger.log('body in controller', { body });
-    return this.commanders.execute(
-      new ChangePasswordCommand({
-        password: body.password,
-        id: body.id,
-      }),
-    );
-  }
-
   @Post('login')
   async login(@Body() body: LoginUserDto) {
     try {
@@ -143,17 +129,5 @@ export class UserController {
         'some thing went wrong try again..',
       );
     }
-  }
-
-  // @UseGuards(AuthGuard('jwt'))
-
-  // @UseGuards(AuthGuard('jwt-refresh'))
-  @EventPattern('updateName.user')
-  refreshToken(@Req() req: IRequest) {
-    const user = req.user['id'];
-    // const users = req.user.id;
-    // return this.commanders.execute(
-    // new UpdateUserNameCommand({ id: body.id, username: body.username }),
-    // );
   }
 }

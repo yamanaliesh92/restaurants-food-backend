@@ -17,7 +17,6 @@ import { CommandBus } from '@nestjs/cqrs';
 
 import { FileInterceptor } from '@nestjs/platform-express';
 
-import { AuthGuard, IRequest } from './shared/auth.guard';
 import { CreateEventCommand } from './command/create-event/create-event.commadn';
 import { GetAllEventCommand } from './command/get-all-event/get-all-event.command';
 import { DeleteEventCommand } from './command/delete-event/delete-event.command';
@@ -27,6 +26,7 @@ import { AxiosApplicationException } from './error/axios.applaction.exception';
 import { UpdateImgEventCommand } from './command/update-img-event/update.img.event.command';
 import { EventGuard } from './shared/event.guard';
 import { CreateEventDto } from './dto/event/create-event.dto';
+import { AuthGuard, IRequest } from 'y/lib/shared/auth.Guard';
 
 @Controller('api/events')
 export class EventsController {

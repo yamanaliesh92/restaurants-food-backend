@@ -4,6 +4,8 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { AxiosError } from 'axios';
 import { lastValueFrom } from 'rxjs';
 import { URLSearchParams } from 'url';
+import { Bc } from 'y/lib/shared/bc.service';
+import { IPayloadJwt, Jwt } from 'y/lib/shared/jwt.service';
 
 import { UserDoa } from '../../db/doa/user.doa';
 import { CreateUserEntityDto } from '../../db/dto/create-user.entity.dto';
@@ -13,11 +15,7 @@ import { ModelMapperService } from '../../db/service/modelMapper.service';
 import { AxiosErrorApplicationException } from '../../error/axios.application.exception';
 import { UnKnowErrorApplicationException } from '../../error/unknow.error.application.exception';
 import { UserAlreadyExistApplicationException } from '../../error/user.alreday.exist.application';
-import { Bc } from '../../shared/bc.service';
-import {
-  IPayloadJwt as IPayloadJwt,
-  JwtService,
-} from '../../shared/jwt.service';
+
 import { CreateUserCommand } from './create_User.command';
 
 @CommandHandler(CreateUserCommand)
@@ -29,11 +27,14 @@ export class CreateUserCommandHandler
     private readonly modelsMapper: ModelMapperService,
     private readonly bc: Bc,
 
-    private readonly jwt: JwtService,
+    private readonly jwt: Jwt,
     private readonly http: HttpService,
   ) {}
 
-  async execute(command: CreateUserCommand) {
+  async execute(command: CreateUserCommand): Promise<{
+    accessToken: string;
+    refreshToken: string;
+  }> {
     try {
       const fromDate = new URLSearchParams();
       const img = command.img;
@@ -68,7 +69,8 @@ export class CreateUserCommandHandler
       };
 
       const token = await this.jwt.sign(Payload);
-      return { acceesToken: token };
+      const refreshToken = await this.jwt.refreshToken(Payload);
+      return { accessToken: token, refreshToken: refreshToken };
     } catch (Err) {
       if (Err instanceof AxiosError) {
         Logger.log('error in axios ', { Err });

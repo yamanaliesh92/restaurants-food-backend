@@ -26,21 +26,20 @@ import { DeleteOrderCommand } from './command/delete_order/delete_order.command'
 import { GetAllOrderCommand } from './command/get_AllOrders/get_AllOrder.command';
 import { GetAllOrderCommandByUserId } from './command/get_allOrderByUserId/getAllOrdersByUserId.command';
 import { GetOneOrderCommand } from './command/get_one_order/get_one_order.command';
-import { UpdateImgOrderCommand } from './command/update-imgProduct/update.imgOrder.command';
+import { UpdateImgOrderCommand } from './command/update-imgOrder/update.imgOrder.command';
 import { UpdateOrderCommand } from './command/update_order/upadte_order.command';
-import { AuthGuard, IRequest } from './shared/auth.guard';
+
 import { GetAllOrderByCategoryCommand } from './command/get-allOrderByCategory/get-allOrderByCategory.command';
 import { NotFoundApplicationException } from './error/notFound.appliaction.exception';
 import { AxiosApplicationException } from './error/axios.applaction.exception';
 import { UpdateOrderDto } from './dto/order/update.order.dto';
 import { CreateOrderDto } from './dto/order/create.order.dto';
 import { OrderGuard } from './shared/order.guard';
+import { AuthGuard, IRequest } from 'y/lib/shared/auth.Guard';
 
 @Controller('api/orders')
 export class OrdersController {
-  constructor(
-    private readonly commandbus: CommandBus, // @Inject('AUTH_MICROSERVICE') private readonly client: ClientKafka,
-  ) {}
+  constructor(private readonly commandbus: CommandBus) {}
 
   @UseGuards(AuthGuard)
   @Get(':id')

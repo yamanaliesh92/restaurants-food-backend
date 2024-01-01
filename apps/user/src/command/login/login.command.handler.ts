@@ -4,13 +4,14 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { Bc } from 'y/lib/shared/bc.service';
+import { IPayloadJwt, Jwt } from 'y/lib/shared/jwt.service';
 import { UserDoa } from '../../db/doa/user.doa';
 import { RecordNotFoundDataAccessException } from '../../db/errors/record-not-found.exception';
-import { ModelMapperService } from '../../db/service/modelMapper.service';
+
 import { UnKnowErrorApplicationException } from '../../error/unknow.error.application.exception';
 import { UserNotFoundApplicationException } from '../../error/user-not-found.apllication.exception';
-import { Bc } from '../../shared/bc.service';
-import { IPayloadJwt, JwtService } from '../../shared/jwt.service';
+
 import { LoginCommand } from './login.coomand';
 
 @CommandHandler(LoginCommand)
@@ -18,11 +19,14 @@ export class LoginCommandHandler implements ICommandHandler<LoginCommand> {
   constructor(
     private readonly userdoa: UserDoa,
     private readonly bc: Bc,
-    private readonly modelMapper: ModelMapperService,
-    private readonly jwt: JwtService,
+
+    private readonly jwt: Jwt,
   ) {}
 
-  async execute(command: LoginCommand): Promise<any> {
+  async execute(command: LoginCommand): Promise<{
+    accessToken: string;
+    refreshToken: string;
+  }> {
     try {
       const user = await this.userdoa.findOne({ email: command.email });
 
@@ -42,7 +46,8 @@ export class LoginCommandHandler implements ICommandHandler<LoginCommand> {
         id: user.id,
       };
       const token = await this.jwt.sign(payload);
-      return { acceesToken: token };
+      const refreshToken = await this.jwt.refreshToken(payload);
+      return { accessToken: token, refreshToken: refreshToken };
     } catch (err) {
       Logger.log('error occurder in LoginCommandHandler', { err });
       if (err instanceof RecordNotFoundDataAccessException) {

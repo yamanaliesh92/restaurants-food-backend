@@ -7,6 +7,7 @@ import { lastValueFrom } from 'rxjs';
 import { URLSearchParams } from 'url';
 import { OrderDoa } from '../../db/doa/order.doa';
 import { CreateOrderEntityDto } from '../../db/dto/createOrder.entity.dto';
+import { OrderDto } from '../../db/dto/Order.dto';
 import { ModelMapperServiceOrder } from '../../db/service/modelMapperOrder.service';
 import { AxiosApplicationException } from '../../error/axios.applaction.exception';
 import { UnKnowApplicationException } from '../../error/unKnow.appliaction.exception';
@@ -22,7 +23,7 @@ export class CreateOrderCommandHandler
     private readonly model: ModelMapperServiceOrder,
   ) {}
 
-  async execute(command: CreateOrderCommand): Promise<any> {
+  async execute(command: CreateOrderCommand): Promise<OrderDto> {
     try {
       const fromDate = new URLSearchParams();
       const imgOrder = command.imgOrder;

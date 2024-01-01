@@ -8,6 +8,7 @@ import { URLSearchParams } from 'url';
 import { EventDoa } from '../../db/doa/event.doa';
 
 import { CreateEventEntityDto } from '../../db/dto/createEventEntity.dto';
+import { EventDto } from '../../db/dto/event.dto';
 
 import { ModelMapperServiceEvent } from '../../db/service/modelMapperEvent.service';
 
@@ -25,7 +26,7 @@ export class CreateEventCommandHandler
     private readonly model: ModelMapperServiceEvent,
   ) {}
 
-  async execute(command: CreateEventCommand): Promise<any> {
+  async execute(command: CreateEventCommand): Promise<EventDto> {
     try {
       const fromDate = new URLSearchParams();
       const imgOrder = command.imgOrder;

@@ -1,8 +1,7 @@
-import { HttpService } from '@nestjs/axios';
-import { InternalServerErrorException, Logger } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { RestaurantDoa } from '../../db/doa/restaurant.doa';
 import { CreateRestaurantEntityDto } from '../../db/dto/createResturant.entity.dto';
+import { RestaurantDto } from '../../db/dto/restaurant.dto';
 import { ModelMapperServiceRestaurant } from '../../db/service/modelMapper.resturant.service';
 import { UnKnowApplicationException } from '../../error/unKnow.appliaction.exception';
 
@@ -17,7 +16,7 @@ export class CreateRestaurantCommandHandler
     private readonly modelMap: ModelMapperServiceRestaurant,
   ) {}
 
-  async execute(command: CreateRestaurantCommand) {
+  async execute(command: CreateRestaurantCommand): Promise<RestaurantDto> {
     try {
       const model: CreateRestaurantEntityDto = {
         name: command.name,

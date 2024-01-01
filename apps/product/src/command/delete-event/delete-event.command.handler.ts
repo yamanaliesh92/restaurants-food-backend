@@ -11,7 +11,7 @@ export class DeleteEventCommandHandler
 {
   constructor(private readonly eventdoa: EventDoa) {}
 
-  async execute(command: DeleteEventCommand): Promise<any> {
+  async execute(command: DeleteEventCommand): Promise<boolean> {
     try {
       return await this.eventdoa.delete(command.id);
     } catch (err) {

@@ -96,7 +96,8 @@
     "moduleNameMapper": {
       "^@app/shared(|/.*)$": "<rootDir>/libs/shared/src/$1",
       "^@app/share(|/.*)$": "<rootDir>/libs/share/src/$1",
-      "^no/sh(|/.*)$": "<rootDir>/libs/sh/src/$1"
+      "^no/sh(|/.*)$": "<rootDir>/libs/sh/src/$1",
+      "^y/lib(|/.*)$": "<rootDir>/libs/lib/src/$1"
     }
   }
 }

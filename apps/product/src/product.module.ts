@@ -1,7 +1,6 @@
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import { ClientsModule, Transport } from '@nestjs/microservices';
 
 import { CreateRestaurantCommandHandler } from './command/create-resturant/creater-resturarant.command.handler';
 
@@ -12,14 +11,14 @@ import { GetAllOrderCommandHandler } from './command/get_AllOrders/get_AllOrder.
 import { GetAllOrdersByUserIdCommandHandler } from './command/get_allOrderByUserId/getAllOrdersByUserId.command.handler';
 import { GetOneOrderCommandHandler } from './command/get_one_order/get_one_order.command.handler';
 
-import { UpdateImgOrderCommandHandler } from './command/update-imgProduct/update-img.order.command.handler';
+import { UpdateImgOrderCommandHandler } from './command/update-imgOrder/update-img.order.command.handler';
 import { UpdateOrderCommandHandler } from './command/update_order/update_order.command.handler';
 import { DbProductModule } from './db/db.product.module';
 
 import { OrdersController } from './order.controller';
 import { ProductService } from './product.service';
 import { ResController } from './restaurant.controller';
-import { Jwt } from './shared/jwt.service';
+
 import { GetAllOrdersByCategoryCommandHandler } from './command/get-allOrderByCategory/get-allOrderByCategory.command.handler';
 import { GetAllRestaurantCommandHandler } from './command/get-allResturant/get-allResturant.comman.handler';
 import { CreateEventCommandHandler } from './command/create-event/create-event.command.handler';
@@ -51,7 +50,7 @@ import { GetOneEventCommandHandler } from './command/get-one-event/get-one.event
     GetAllRestaurantCommandHandler,
     GetAllEventCommandHandler,
     GetAllOrdersByCategoryCommandHandler,
-    Jwt,
+
     GetAllOrdersByUserIdCommandHandler,
     GetAllOrderCommandHandler,
     DeleteOrderCommandHandler,

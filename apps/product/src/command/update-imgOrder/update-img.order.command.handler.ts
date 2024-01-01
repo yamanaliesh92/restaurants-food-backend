@@ -19,7 +19,7 @@ export class UpdateImgOrderCommandHandler
     private readonly http: HttpService,
   ) {}
 
-  async execute(command: UpdateImgOrderCommand) {
+  async execute(command: UpdateImgOrderCommand): Promise<boolean> {
     try {
       const fromDate = new URLSearchParams();
       const img = command.imgOrder;

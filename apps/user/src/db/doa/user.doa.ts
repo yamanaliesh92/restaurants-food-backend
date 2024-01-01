@@ -65,7 +65,7 @@ export class UserDoa {
         ...(args.img ? { img: args.img } : {}),
         ...(args.password ? { password: args.password } : {}),
       });
-      return result;
+      return result.affected > 0;
     } catch (err) {
       Logger.log('error ', { err });
 

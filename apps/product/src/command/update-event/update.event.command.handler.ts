@@ -11,7 +11,7 @@ export class UpdateEventCommandHandler
 {
   constructor(private readonly eventDoa: EventDoa) {}
 
-  async execute(command: UpdateEventCommand) {
+  async execute(command: UpdateEventCommand): Promise<boolean> {
     try {
       {
         command.name ? { name: command.name } : {};

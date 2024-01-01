@@ -12,6 +12,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
+import { AuthGuard, IRequest } from 'y/lib/shared/auth.Guard';
 import { CreateRestaurantCommand } from './command/create-resturant/create-resturant.command';
 import { GetAllRestaurantCommand } from './command/get-allResturant/get-allResturant.command';
 import { GetOneRestaurantCommand } from './command/get-one-restaurant/get-one-restaurant.command';
@@ -19,7 +20,6 @@ import { UpdateRestaurantInfoCommand } from './command/update-resturant/update.r
 import { CreateRestaurantDto } from './dto/resturant/create.resturant.dto';
 import { UpdateRestaurantDto } from './dto/resturant/update.restaurant.dto';
 import { NotFoundApplicationException } from './error/notFound.appliaction.exception';
-import { AuthGuard, IRequest } from './shared/auth.guard';
 
 @Controller('api/restaurants')
 export class ResController {
@@ -56,14 +56,6 @@ export class ResController {
         'some thing went wrong try again...',
       );
     }
-  }
-
-  @UseGuards(AuthGuard)
-  @Get()
-  getS(@Req() req: IRequest) {
-    // Logger.log('assd', { req });
-    return `${req.user.id}`;
-    return 'hello';
   }
 
   @UseGuards(AuthGuard)

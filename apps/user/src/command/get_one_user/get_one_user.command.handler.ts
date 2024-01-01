@@ -1,6 +1,7 @@
 import { InternalServerErrorException, Logger } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UserDoa } from '../../db/doa/user.doa';
+import { UserDto } from '../../db/dto/user.dto';
 import { ModelMapperService } from '../../db/service/modelMapper.service';
 import { UserNotFoundApplicationException } from '../../error/user-not-found.apllication.exception';
 
@@ -14,7 +15,7 @@ export class GetOneUserCommandHandler
     private readonly userdoa: UserDoa,
     private readonly model: ModelMapperService,
   ) {}
-  async execute(command: GetOneUserCommand) {
+  async execute(command: GetOneUserCommand): Promise<UserDto> {
     try {
       const result = await this.userdoa.findOne({ id: command.id });
 

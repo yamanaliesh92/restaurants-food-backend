@@ -13,7 +13,7 @@ export class GetOneRestaurantCommandHandler
 {
   constructor(private readonly res: RestaurantDoa) {}
 
-  async execute(command: GetOneRestaurantCommand): Promise<any> {
+  async execute(command: GetOneRestaurantCommand) {
     try {
       return await this.res.findOne({ id: command.id });
     } catch (err) {
