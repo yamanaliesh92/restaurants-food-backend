@@ -1,10 +1,13 @@
 import { UserModule } from './user.module';
 import { NestFactory } from '@nestjs/core';
-import { Transport } from '@nestjs/microservices';
+
 import { Logger, ValidationPipe } from '@nestjs/common';
+import { ResponseInterceptor } from 'y/lib/interceptor/response.interceptor';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(UserModule);
+
+  app.useGlobalInterceptors(new ResponseInterceptor());
 
   app.useGlobalPipes(new ValidationPipe());
 
