@@ -1,6 +1,7 @@
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
+import { JwtService } from '@nestjs/jwt';
 
 import { CreateRestaurantCommandHandler } from './command/create-resturant/creater-resturarant.command.handler';
 
@@ -50,7 +51,7 @@ import { GetOneEventCommandHandler } from './command/get-one-event/get-one.event
     GetAllRestaurantCommandHandler,
     GetAllEventCommandHandler,
     GetAllOrdersByCategoryCommandHandler,
-
+    JwtService,
     GetAllOrdersByUserIdCommandHandler,
     GetAllOrderCommandHandler,
     DeleteOrderCommandHandler,

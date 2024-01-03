@@ -2,6 +2,9 @@ import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 
 import { CqrsModule } from '@nestjs/cqrs';
+import { JwtService } from '@nestjs/jwt';
+
+import { AuthGuard } from 'y/lib/shared/auth.Guard';
 
 import { Bc } from 'y/lib/shared/bc.service';
 import { Jwt } from 'y/lib/shared/jwt.service';
@@ -15,9 +18,6 @@ import { UpdateImgCommandHandler } from './command/update-img/update.img.command
 import { UpdateUserCommandHandler } from './command/update_user/update_user.command.handler';
 import { DbUserModule } from './db/db.module';
 
-// import { Bc } from './shared/bc.service';
-// import { JwtService } from './shared/jwt.service';
-
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
 
@@ -29,10 +29,9 @@ import { UserService } from './user.service';
     Bc,
     Jwt,
     CreateUserCommandHandler,
-
     UpdateUserCommandHandler,
     UpdateImgCommandHandler,
-
+    JwtService,
     LoginCommandHandler,
     GetOneUserCommandHandler,
   ],
