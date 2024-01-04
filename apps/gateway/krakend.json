@@ -15,15 +15,20 @@
       "allow_headers": [
         "Content-Type",
         "Content-Length",
+        "Authorization",
+        "Refresh",
         "Accept",
-
         "authorization",
-
         "User-Agent",
         "Host",
         "Origin"
       ],
-
+      "expose_headers": [
+        "Content-Length",
+        "Content-Type",
+        "new_token",
+        "new_refresh_token"
+      ],
       "debug": true,
 
       "allow_credentials": true,
@@ -81,9 +86,9 @@
       "input_headers": [
         "User-Agent",
         "Accept",
-
         "authorization",
-
+        "Authorization",
+        "Refresh",
         "Content-Type",
         "Content-Length"
       ],
@@ -115,7 +120,9 @@
         "Accept",
         "authorization",
         "Content-Type",
-        "Content-Length"
+        "Content-Length",
+        "Authorization",
+        "Refresh"
       ],
       "backend": [
         {
@@ -143,10 +150,11 @@
       "input_headers": [
         "User-Agent",
         "Accept",
-
         "authorization",
         "Content-Type",
-        "Content-Length"
+        "Content-Length",
+        "Authorization",
+        "Refresh"
       ],
       "backend": [
         {
@@ -175,7 +183,8 @@
         "User-Agent",
         "Accept",
         "authorization",
-
+        "Authorization",
+        "Refresh",
         "Content-Type",
         "Content-Length"
       ],
@@ -208,7 +217,9 @@
         "Accept",
         "authorization",
         "Content-Type",
-        "Content-Length"
+        "Content-Length",
+        "Authorization",
+        "Refresh"
       ],
 
       "input_query_strings": ["category"],
@@ -242,7 +253,9 @@
         "User-Agent",
         "Accept",
         "Content-Type",
-        "Content-Length"
+        "Content-Length",
+        "Authorization",
+        "Refresh"
       ],
       "backend": [
         {
@@ -269,7 +282,8 @@
       "output_encoding": "no-op",
       "input_headers": [
         "authorization",
-
+        "Authorization",
+        "Refresh",
         "User-Agent",
         "Accept",
         "Content-Type",
@@ -303,7 +317,9 @@
         "authorization",
         "Accept",
         "Content-Type",
-        "Content-Length"
+        "Content-Length",
+        "Authorization",
+        "Refresh"
       ],
       "backend": [
         {
@@ -333,7 +349,9 @@
         "User-Agent",
         "Accept",
         "Content-Type",
-        "Content-Length"
+        "Content-Length",
+        "Authorization",
+        "Refresh"
       ],
       "backend": [
         {
@@ -363,7 +381,9 @@
         "Accept",
         "Content-Type",
         "authorization",
-        "Content-Length"
+        "Content-Length",
+        "Authorization",
+        "Refresh"
       ],
       "backend": [
         {
@@ -393,7 +413,9 @@
         "User-Agent",
         "Accept",
         "Content-Type",
-        "Content-Length"
+        "Content-Length",
+        "Authorization",
+        "Refresh"
       ],
       "backend": [
         {
@@ -422,7 +444,9 @@
         "Accept",
         "authorization",
         "Content-Type",
-        "Content-Length"
+        "Content-Length",
+        "Authorization",
+        "Refresh"
       ],
       "backend": [
         {
@@ -450,7 +474,9 @@
         "User-Agent",
         "Accept",
         "Content-Type",
-        "Content-Length"
+        "Content-Length",
+        "Authorization",
+        "Refresh"
       ],
       "output_encoding": "no-op",
       "input_query_strings": ["id"],
@@ -480,7 +506,9 @@
         "User-Agent",
         "Accept",
         "Content-Type",
-        "Content-Length"
+        "Content-Length",
+        "Authorization",
+        "Refresh"
       ],
       "output_encoding": "no-op",
       "input_query_strings": ["id"],
@@ -511,7 +539,9 @@
         "authorization",
         "Accept",
         "Content-Type",
-        "Content-Length"
+        "Content-Length",
+        "Authorization",
+        "Refresh"
       ],
       "backend": [
         {
@@ -571,7 +601,9 @@
         "authorization",
         "Accept",
         "Content-Type",
-        "Content-Length"
+        "Content-Length",
+        "Authorization",
+        "Refresh"
       ],
 
       "backend": [
@@ -598,7 +630,8 @@
       "output_encoding": "no-op",
       "input_headers": [
         "authorization",
-
+        "Authorization",
+        "Refresh",
         "User-Agent",
         "Accept",
         "Content-Type",
@@ -632,7 +665,9 @@
         "User-Agent",
         "Accept",
         "Content-Type",
-        "Content-Length"
+        "Content-Length",
+        "Authorization",
+        "Refresh"
       ],
       "backend": [
         {
@@ -662,7 +697,9 @@
         "User-Agent",
         "Accept",
         "Content-Type",
-        "Content-Length"
+        "Content-Length",
+        "Authorization",
+        "Refresh"
       ],
       "backend": [
         {
@@ -690,7 +727,9 @@
         "authorization",
         "Accept",
         "Content-Type",
-        "Content-Length"
+        "Content-Length",
+        "Authorization",
+        "Refresh"
       ],
       "output_encoding": "no-op",
       "backend": [
@@ -719,7 +758,9 @@
         "Accept",
         "authorization",
         "Content-Type",
-        "Content-Length"
+        "Content-Length",
+        "Authorization",
+        "Refresh"
       ],
       "output_encoding": "no-op",
       "backend": [
@@ -749,7 +790,9 @@
         "User-Agent",
         "Accept",
         "Content-Type",
-        "Content-Length"
+        "Content-Length",
+        "Authorization",
+        "Refresh"
       ],
 
       "backend": [

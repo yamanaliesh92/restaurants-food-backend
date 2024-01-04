@@ -1,6 +1,6 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { Test, TestingModule } from '@nestjs/testing';
-import { CreateUserCommand } from '../command/create_User/create_User.command';
+import { CreateUserCommand } from '../command/create-user/create-user.command';
 import { User } from '../db/entity/user.entity';
 import { CommandBusMock } from '../mock/commandMock/createUser.mock';
 import { UserController } from '../user.controller';

@@ -6,13 +6,13 @@ import {
   QueryFailedError,
   Repository,
 } from 'typeorm';
-import { CreateRestaurantEntityDto } from '../dto/createResturant.entity.dto';
+import { CreateRestaurantEntityDto } from '../dto/create-restaurant.entity.dto';
 import { UpdateRestaurantEntityDto } from '../dto/updateResturant.entity.dto';
 import { OrderEntity } from '../entity/order.entity';
 import { RestaurantEntity } from '../entity/restaurant.entity';
 import { NotFoundDataAccessException } from '../error/notFoundError.access.exception';
 import { UnKnowDataAccessException } from '../error/unKnowError.data.exception';
-import { ModelMapperServiceRestaurant } from '../service/modelMapper.resturant.service';
+import { ModelMapperServiceRestaurant } from '../service/modelMapper.restaurant.service';
 
 @Injectable()
 export class RestaurantDoa {

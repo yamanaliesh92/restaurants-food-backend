@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CreateProductCommand } from '../../command/create_order/create_order.command';
+import { CreateProductCommand } from '../../command/create-order/create_order.command';
 
 import { ProductDoa } from '../../db/doa/order.doa';
 import { Product } from '../../db/entity/order.entity';
 import { ProductDoaMock } from '../../mock/product.doa.mock';
 import { expect } from '@jest/globals';
-import { GetOneProductCommandHandler } from '../../command/get_one_order/get_one_order.command.handler';
-import { GetOneProductCommand } from '../../command/get_one_order/get_one_order.command';
+import { GetOneProductCommandHandler } from '../../query/get-order/get-order.query.handler';
+import { GetOneProductCommand } from '../../query/get-order/get-order.query';
 
 describe('test createProduct', () => {
   let productDoa: ProductDoa;

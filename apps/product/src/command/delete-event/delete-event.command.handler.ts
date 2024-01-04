@@ -2,7 +2,7 @@ import { InternalServerErrorException, Logger } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { EventDoa } from '../../db/doa/event.doa';
 import { OrderDoa } from '../../db/doa/order.doa';
-import { UnKnowApplicationException } from '../../error/unKnow.appliaction.exception';
+import { UnKnowApplicationException } from '../../error/unknown.application.exception';
 import { DeleteEventCommand } from './delete-event.command';
 
 @CommandHandler(DeleteEventCommand)

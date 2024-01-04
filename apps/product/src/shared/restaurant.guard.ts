@@ -1,10 +1,10 @@
 import { ExecutionContext, Injectable } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
-import { GetOneRestaurantCommand } from '../command/get-one-restaurant/get-one-restaurant.command';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { GetOneRestaurantQuery } from '../query/get-one-restaurant/get-one-restaurant.query';
 
 @Injectable()
 export class RestaurantGuard {
-  constructor(private readonly commandBus: CommandBus) {}
+  constructor(private readonly queryBus: QueryBus) {}
 
   async canActivate(context: ExecutionContext) {
     try {
@@ -13,8 +13,8 @@ export class RestaurantGuard {
 
       const userId = request.user.id;
 
-      const result = await this.commandBus.execute(
-        new GetOneRestaurantCommand({ id: id }),
+      const result = await this.queryBus.execute(
+        new GetOneRestaurantQuery({ id: id }),
       );
 
       if (result.userId !== userId) {

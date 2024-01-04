@@ -1,48 +1,48 @@
 import {
-  BadRequestException,
   Body,
   Controller,
   Get,
   InternalServerErrorException,
-  Logger,
+  NotFoundException,
   Param,
   Patch,
   Post,
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
+
 import { AuthGuard, IRequest } from 'y/lib/shared/auth.Guard';
-import { CreateRestaurantCommand } from './command/create-resturant/create-resturant.command';
-import { GetAllRestaurantCommand } from './command/get-allResturant/get-allResturant.command';
-import { GetOneRestaurantCommand } from './command/get-one-restaurant/get-one-restaurant.command';
-import { UpdateRestaurantInfoCommand } from './command/update-resturant/update.resturant.info.command';
-import { CreateRestaurantDto } from './dto/resturant/create.resturant.dto';
-import { UpdateRestaurantDto } from './dto/resturant/update.restaurant.dto';
-import { NotFoundApplicationException } from './error/notFound.appliaction.exception';
+import { CreateRestaurantCommand } from './command/create-restaurant/create-restaurant.command';
+import { GetAllRestaurantQuery } from './query/get-restaurant/get-restaurant.query';
+import { GetOneRestaurantQuery } from './query/get-one-restaurant/get-one-restaurant.query';
+import { UpdateRestaurantInfoCommand } from './command/update-restaurant/update.restaurant.info.command';
+import { CreateRestaurantDto } from './dto/restaurant/create-restaurant.dto';
+import { UpdateRestaurantDto } from './dto/restaurant/update-restaurant.dto';
+import { NotFoundApplicationException } from './error/record-not-found.application.exception';
 
 @Controller('api/restaurants')
 export class ResController {
   constructor(
-    private readonly commandbus: CommandBus, // @Inject('AUTH_MICROSERVICE') private readonly client: ClientKafka,
+    private readonly commandBus: CommandBus,
+    private readonly queryBus: QueryBus,
   ) {}
 
   @UseGuards(AuthGuard)
   @Get(':id')
   async getOne(@Param('id') id: number) {
     try {
-      return this.commandbus.execute(
-        new GetOneRestaurantCommand({
-          id: id,
-        }),
-      );
+      const query = new GetOneRestaurantQuery({
+        id: id,
+      });
+
+      return await this.queryBus.execute(query);
     } catch (err) {
       if (err instanceof NotFoundApplicationException) {
-        throw new BadRequestException('not found ');
+        throw new NotFoundException();
       }
-      throw new InternalServerErrorException(
-        'some thing went wrong try again...',
-      );
+
+      throw new InternalServerErrorException();
     }
   }
 
@@ -50,11 +50,11 @@ export class ResController {
   @Get('all/restaurants')
   async getAll() {
     try {
-      return this.commandbus.execute(new GetAllRestaurantCommand());
+      const query = new GetAllRestaurantQuery();
+
+      return this.queryBus.execute(query);
     } catch (err) {
-      throw new InternalServerErrorException(
-        'some thing went wrong try again...',
-      );
+      throw new InternalServerErrorException();
     }
   }
 
@@ -64,19 +64,16 @@ export class ResController {
     @Body() body: UpdateRestaurantDto,
     @Param('id') id: number,
   ) {
-    Logger.log('hell');
     try {
-      return this.commandbus.execute(
-        new UpdateRestaurantInfoCommand({
-          name: body.name,
-          address: body.address,
-          id: id,
-        }),
-      );
+      const cmd = new UpdateRestaurantInfoCommand({
+        name: body.name,
+        address: body.address,
+        id: id,
+      });
+
+      return this.commandBus.execute(cmd);
     } catch (err) {
-      throw new InternalServerErrorException(
-        'some thing went wrong try again...',
-      );
+      throw new InternalServerErrorException();
     }
   }
 
@@ -87,17 +84,15 @@ export class ResController {
     @Req() req: IRequest,
   ) {
     try {
-      return this.commandbus.execute(
-        new CreateRestaurantCommand({
-          name: body.name,
-          address: body.address,
-          userId: req.user.id,
-        }),
-      );
+      const cmd = new CreateRestaurantCommand({
+        name: body.name,
+        address: body.address,
+        userId: req.user.id,
+      });
+
+      return this.commandBus.execute(cmd);
     } catch (err) {
-      throw new InternalServerErrorException(
-        'some thing went wrong try again...',
-      );
+      throw new InternalServerErrorException();
     }
   }
 }

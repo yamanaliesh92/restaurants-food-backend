@@ -6,7 +6,7 @@ interface CreateEventData {
   restaurantId: number;
   newPrice: number;
   oldPrice: number;
-  date: Date;
+  date: string;
   description: string;
   category: string;
 }
@@ -16,9 +16,8 @@ export class CreateEventDto {
   @IsNotEmpty()
   description: string;
 
-  @IsDate()
   @IsNotEmpty()
-  date: Date;
+  date: string;
 
   @IsNumber()
   @IsNotEmpty()

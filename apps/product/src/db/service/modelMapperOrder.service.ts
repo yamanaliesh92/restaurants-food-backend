@@ -21,7 +21,7 @@ export class ModelMapperServiceOrder {
     });
   }
 
-  OrderToDto(data: Order): OrderDto {
+  orderToDto(data: Order): OrderDto {
     return new OrderDto({
       id: data.id,
       createdAt: data.createdAt,

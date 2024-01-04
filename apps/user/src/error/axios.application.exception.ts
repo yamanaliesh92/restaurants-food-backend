@@ -1,4 +1,4 @@
-import { ApplicationException } from './apllicationException';
+import { ApplicationException } from './application.exception';
 
 export class AxiosErrorApplicationException extends ApplicationException {
   constructor() {

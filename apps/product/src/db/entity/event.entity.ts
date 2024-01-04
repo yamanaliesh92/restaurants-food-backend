@@ -8,6 +8,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Base } from 'y/lib/base.entity';
 
 interface EventData {
   name: string;
@@ -22,13 +23,13 @@ interface EventData {
 }
 
 @Entity('event')
-export class EventEntity {
-  @PrimaryGeneratedColumn('increment')
-  id: number;
-  @CreateDateColumn({ type: 'timestamptz' })
-  createdAt: Date;
-  @UpdateDateColumn({ type: 'timestamptz' })
-  updatedAt: Date;
+export class EventEntity extends Base {
+  // @PrimaryGeneratedColumn('increment')
+  // id: number;
+  // @CreateDateColumn({ type: 'timestamptz' })
+  // createdAt: Date;
+  // @UpdateDateColumn({ type: 'timestamptz' })
+  // updatedAt: Date;
 
   @Column({ type: 'text' })
   name: string;
@@ -63,6 +64,7 @@ export class EventEntity {
   restaurant: RestaurantEntity;
 
   constructor(data: EventData) {
+    super();
     if (data) {
       this.category = data.category;
       this.newPrice = data.newPrice;

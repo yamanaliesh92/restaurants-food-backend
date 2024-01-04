@@ -1,7 +1,7 @@
 import { InternalServerErrorException, Logger } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { OrderDoa } from '../../db/doa/order.doa';
-import { UnKnowApplicationException } from '../../error/unKnow.appliaction.exception';
+import { UnKnowApplicationException } from '../../error/unknown.application.exception';
 import { DeleteOrderCommand } from './delete_order.command';
 
 @CommandHandler(DeleteOrderCommand)

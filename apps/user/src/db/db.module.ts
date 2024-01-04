@@ -16,23 +16,18 @@ import { DatabaseConfig } from '../config';
 
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
+      useFactory: (config: ConfigService) => ({
         entities: [UserEntity],
-        ...configService.get('database'),
+        type: 'postgres',
+        database: config.getOrThrow('DB_NAME'),
+        password: config.getOrThrow('DB_PASSWORD'),
+        username: config.getOrThrow('DB_USER'),
+        host: config.getOrThrow('DB_HOST'),
+        synchronize: true,
       }),
       inject: [ConfigService],
     }),
     TypeOrmModule.forFeature([UserEntity]),
-    // TypeOrmModule.forRoot({
-    //   type: 'postgres',
-    //   host: 'user_db',
-    //   port: 5432,
-    //   username: 'economic-username',
-    //   password: 'economic_password',
-    //   database: 'economic_database',
-    //   entities: [UserEntity],
-    //   synchronize: true,
-    // }),
   ],
   providers: [UserDoa, ModelMapperService],
   controllers: [],

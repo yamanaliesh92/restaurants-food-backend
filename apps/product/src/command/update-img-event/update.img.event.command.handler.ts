@@ -6,8 +6,8 @@ import { AxiosError } from 'axios';
 import { lastValueFrom } from 'rxjs';
 import { URLSearchParams } from 'url';
 import { EventDoa } from '../../db/doa/event.doa';
-import { AxiosApplicationException } from '../../error/axios.applaction.exception';
-import { UnKnowApplicationException } from '../../error/unKnow.appliaction.exception';
+import { AxiosApplicationException } from '../../error/axios.application.exception';
+import { UnKnowApplicationException } from '../../error/unknown.application.exception';
 import { UpdateImgEventCommand } from './update.img.event.command';
 
 @CommandHandler(UpdateImgEventCommand)

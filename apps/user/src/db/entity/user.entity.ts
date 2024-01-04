@@ -5,26 +5,26 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Base } from 'y/lib/base.entity';
 
 interface UserData {
   email: string;
   password: string;
   username: string;
-  img: string;
 }
 
 @Entity('user')
-export class UserEntity {
-  @PrimaryGeneratedColumn('increment')
-  id: number;
+export class UserEntity extends Base {
+  // @PrimaryGeneratedColumn('increment')
+  // id: number;
 
-  @CreateDateColumn({ type: 'timestamptz' })
-  cratedAt: Date;
+  // @CreateDateColumn({ type: 'timestamptz' })
+  // cratedAt: Date;
 
-  @UpdateDateColumn({ type: 'timestamptz' })
-  updatedAt: Date;
+  // @UpdateDateColumn({ type: 'timestamptz' })
+  // updatedAt: Date;
 
-  @Column({ unique: true })
+  @Column({ unique: true, type: 'text' })
   email: string;
 
   @Column({ type: 'text' })
@@ -33,13 +33,10 @@ export class UserEntity {
   @Column({ type: 'text' })
   username: string;
 
-  @Column({ type: 'text', nullable: true })
-  img: string;
-
   constructor(data: UserData) {
+    super();
     if (data) {
       this.email = data.email;
-      this.img = data.img;
       this.password = data.password;
       this.username = data.username;
     }

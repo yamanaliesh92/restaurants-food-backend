@@ -4,78 +4,49 @@ import {
   Controller,
   Get,
   InternalServerErrorException,
-  Logger,
   Patch,
   Post,
   Req,
-  UploadedFile,
   UseGuards,
-  UseInterceptors,
 } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 
-import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthGuard, IRequest } from 'y/lib/shared/auth.Guard';
 
-import { CreateUserCommand } from './command/create_User/create_User.command';
+import { CreateUserCommand } from './command/create-user/create-user.command';
 
-import { GetOneUserCommand } from './command/get_one_user/get_one_user.command';
-import { LoginCommand } from './command/login/login.coomand';
+import { GetUserQuery } from './query/get-user/get-user.query';
+import { LoginCommand } from './command/login/login.command';
 
-import { UpdateImgCommand } from './command/update-img/update.img.command';
-import { UpdateUserCommand } from './command/update_user/update_user.command';
+import { UpdateUserCommand } from './command/update-user/update_user.command';
 import { CreateUserDto } from './dto/create.user.dto';
 import { LoginUserDto } from './dto/login.dto';
-import { UpdateUserNameDto } from './dto/update.usernaem.dto';
+import { UpdateUserNameDto } from './dto/update.username.dto';
 import { AxiosErrorApplicationException } from './error/axios.application.exception';
-import { UserNotFoundApplicationException } from './error/user-not-found.apllication.exception';
-import { UserAlreadyExistApplicationException } from './error/user.alreday.exist.application';
+import { UserNotFoundApplicationException } from './error/user-not-found.application.exception';
+import { UserAlreadyExistApplicationException } from './error/user.already.exist.application';
 
 @Controller('/api/users')
 export class UserController {
   constructor(private readonly commanders: CommandBus) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('img'))
-  async createUser(
-    @Body() body: CreateUserDto,
-
-    @UploadedFile() img: Express.Multer.File,
-  ) {
+  async createUser(@Body() body: CreateUserDto) {
     try {
-      return await this.commanders.execute(
-        new CreateUserCommand({
-          email: body.email,
-          img: img.buffer.toString('base64'),
-          username: body.username,
-          password: body.password,
-        }),
-      );
+      const cmd = new CreateUserCommand({
+        email: body.email,
+        username: body.username,
+        password: body.password,
+      });
+
+      return await this.commanders.execute(cmd);
     } catch (err) {
       if (err instanceof UserAlreadyExistApplicationException) {
-        throw new BadRequestException('user already exist');
+        throw new BadRequestException('User with the same email already exist');
       }
 
-      if (err instanceof AxiosErrorApplicationException) {
-        throw new BadRequestException(
-          'some thing went wrong in upload your img try again',
-        );
-      }
-      throw new InternalServerErrorException('some things went wrong');
+      throw new InternalServerErrorException();
     }
-  }
-
-  @UseGuards(AuthGuard)
-  @Patch('update')
-  @UseInterceptors(FileInterceptor('img'))
-  updateImg(@Req() req: IRequest, @UploadedFile() img: Express.Multer.File) {
-    Logger.log('img', img);
-    return this.commanders.execute(
-      new UpdateImgCommand({
-        id: req.user.id,
-        img: img.buffer.toString('base64'),
-      }),
-    );
   }
 
   @UseGuards(AuthGuard)
@@ -85,16 +56,14 @@ export class UserController {
     @Body() { username }: UpdateUserNameDto,
   ) {
     try {
-      return await this.commanders.execute(
-        new UpdateUserCommand({
-          id: req.user.id,
-          username: username,
-        }),
-      );
+      const cmd = new UpdateUserCommand({
+        id: req.user.id,
+        username: username,
+      });
+
+      return await this.commanders.execute(cmd);
     } catch (err) {
-      throw new InternalServerErrorException(
-        'some thing went wrong try again..',
-      );
+      throw new InternalServerErrorException();
     }
   }
 
@@ -102,11 +71,10 @@ export class UserController {
   @Get()
   async getMe(@Req() request: IRequest) {
     try {
-      return await this.commanders.execute(
-        new GetOneUserCommand({
-          id: request.user.id,
-        }),
-      );
+      const cmd = new GetUserQuery({
+        id: request.user.id,
+      });
+      return await this.commanders.execute(cmd);
     } catch (error) {
       throw new InternalServerErrorException('some thing went wrong');
     }
@@ -125,9 +93,8 @@ export class UserController {
       if (err instanceof UserNotFoundApplicationException) {
         throw new BadRequestException('email or password is not correct');
       }
-      throw new InternalServerErrorException(
-        'some thing went wrong try again..',
-      );
+
+      throw new InternalServerErrorException();
     }
   }
 }

@@ -9,12 +9,11 @@ export class ModelMapperService {
     Logger.log('entity', { entity });
     return new User({
       id: entity.id,
-      createdAt: entity.cratedAt,
+      createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
       email: entity.email,
       username: entity.username,
       password: entity.password,
-      img: entity.img,
     });
   }
 
@@ -23,7 +22,7 @@ export class ModelMapperService {
       id: data.id,
       email: data.email,
       username: data.username,
-      img: data.img,
+
       createdAt: data.createdAt,
       updatedAt: data.updatedAt,
     });

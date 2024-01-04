@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CreateProductCommand } from '../../command/create_order/create_order.command';
-import { CreateProductCommandHandler } from '../../command/create_order/create_order.command.handler';
+import { CreateProductCommand } from '../../command/create-order/create_order.command';
+import { CreateProductCommandHandler } from '../../command/create-order/create_order.command.handler';
 import { ProductDoa } from '../../db/doa/order.doa';
 import { Product } from '../../db/entity/order.entity';
 import { ProductDoaMock } from '../../mock/product.doa.mock';

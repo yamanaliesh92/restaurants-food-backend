@@ -5,7 +5,7 @@ interface UserModelData {
   username: string;
   email: string;
   password: string;
-  img: string;
+
   createdAt: Date;
   updatedAt: Date;
 }
@@ -14,7 +14,7 @@ export class User extends AggregateRoot {
   #id: number;
   #email: string;
   #password: string;
-  #img: string;
+
   #username: string;
   #createdAt: Date;
   #updatedAt: Date;
@@ -35,9 +35,6 @@ export class User extends AggregateRoot {
     return this.#username;
   }
 
-  get img(): string {
-    return this.#img;
-  }
   get createdAt(): Date {
     return this.#createdAt;
   }
@@ -51,7 +48,6 @@ export class User extends AggregateRoot {
     this.#id = data.id;
     this.#email = data.email;
     this.#password = data.password;
-    this.#img = data.img;
     this.#username = data.username;
     this.#createdAt = data.createdAt;
     this.#updatedAt = data.updatedAt;

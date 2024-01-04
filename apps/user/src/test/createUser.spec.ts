@@ -1,8 +1,8 @@
 import { InternalServerErrorException } from '@nestjs/common';
 import { Logger } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { CreateUserCommand } from '../command/create_User/create_User.command';
-import { CreateUserCommandHandler } from '../command/create_User/create_User.command.handler';
+import { CreateUserCommand } from '../command/create-user/create-user.command';
+import { CreateUserCommandHandler } from '../command/create-user/create-user.command.handler';
 import { UserDoa } from '../db/doa/user.doa';
 import { User } from '../db/entity/user.entity';
 import { BcMock } from '../mock/bc.mock';

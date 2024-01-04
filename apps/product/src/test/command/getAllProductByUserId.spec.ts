@@ -1,4 +1,4 @@
-import { GetAllProductCommandHandler } from '../../command/get_allOrderByUserId/getAllOrdersByUserId.command.handler';
+import { GetAllProductCommandHandler } from '../../query/get-user-orders/get-user-orders.command.handler';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { ProductDoa } from '../../db/doa/order.doa';
@@ -6,7 +6,7 @@ import { ProductDoa } from '../../db/doa/order.doa';
 import { ProductDoaMock } from '../../mock/product.doa.mock';
 import { expect } from '@jest/globals';
 
-import { GetAllProductCommand } from '../../command/get_allOrderByUserId/getAllOrdersByUserId.command';
+import { GetAllProductCommand } from '../../query/get-user-orders/getAllOrdersByUserId.command';
 
 describe('test createProduct', () => {
   let productDoa: ProductDoa;

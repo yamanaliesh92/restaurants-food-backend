@@ -29,7 +29,6 @@ export class UserDoa {
         email: data.email,
         password: data.password,
         username: data.username,
-        img: data.img,
       });
       const result = await this.repo.save(model);
       return this.modelMapper.toUser(result);
@@ -62,7 +61,7 @@ export class UserDoa {
     try {
       const result = await this.repo.update(id, {
         ...(args.username ? { username: args.username } : {}),
-        ...(args.img ? { img: args.img } : {}),
+
         ...(args.password ? { password: args.password } : {}),
       });
       return result.affected > 0;

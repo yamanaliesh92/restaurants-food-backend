@@ -7,7 +7,7 @@ import {
   Logger,
   UnauthorizedException,
 } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+
 import { TokenISValidApplicationException } from '../error/token.appliactionException';
 import { Jwt } from './jwt.service';
 
@@ -22,12 +22,15 @@ export interface IRequest {
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private jwtService: JwtService, private jwt: Jwt) {}
+  constructor(private jwt: Jwt) {}
 
   async canActivate(context: ExecutionContext) {
     const request = context.switchToHttp().getRequest();
+
     const token = request.headers[HEADER_NAME];
+    Logger.log('token', token);
     const refToken = request.headers[REFRESH_NAME];
+    Logger.log('token', refToken);
 
     if (!token) {
       throw new UnauthorizedException();

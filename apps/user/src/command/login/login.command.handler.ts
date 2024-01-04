@@ -1,18 +1,14 @@
-import {
-  InternalServerErrorException,
-  Logger,
-  NotFoundException,
-} from '@nestjs/common';
+import { InternalServerErrorException, Logger } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { Bc } from 'y/lib/shared/bc.service';
 import { IPayloadJwt, Jwt } from 'y/lib/shared/jwt.service';
 import { UserDoa } from '../../db/doa/user.doa';
 import { RecordNotFoundDataAccessException } from '../../db/errors/record-not-found.exception';
 
-import { UnKnowErrorApplicationException } from '../../error/unknow.error.application.exception';
-import { UserNotFoundApplicationException } from '../../error/user-not-found.apllication.exception';
+import { UnKnowErrorApplicationException } from '../../error/unknown.error.application.exception';
+import { UserNotFoundApplicationException } from '../../error/user-not-found.application.exception';
 
-import { LoginCommand } from './login.coomand';
+import { LoginCommand } from './login.command';
 
 @CommandHandler(LoginCommand)
 export class LoginCommandHandler implements ICommandHandler<LoginCommand> {

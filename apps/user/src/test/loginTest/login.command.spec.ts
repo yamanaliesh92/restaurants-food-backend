@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { LoginCommandHandler } from '../../command/login/login.command.handler';
-import { LoginCommand } from '../../command/login/login.coomand';
+import { LoginCommand } from '../../command/login/login.command';
 import { UserDoa } from '../../db/doa/user.doa';
 import { User } from '../../db/entity/user.entity';
 import { BcMock } from '../../mock/bc.mock';

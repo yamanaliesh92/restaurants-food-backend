@@ -3,7 +3,7 @@ interface UserDtoData {
   createdAt: Date;
   updatedAt: Date;
   username: string;
-  img: string;
+
   email: string;
 }
 
@@ -12,7 +12,6 @@ export class UserDto {
   createdAt: Date;
   updatedAt: Date;
   username: string;
-  img: string;
   email: string;
 
   constructor(data: UserDtoData) {
@@ -20,7 +19,6 @@ export class UserDto {
     this.createdAt = data.createdAt;
     this.updatedAt = data.updatedAt;
     this.username = data.username;
-    this.img = data.img;
     this.email = data.email;
     this.username = data.username;
   }

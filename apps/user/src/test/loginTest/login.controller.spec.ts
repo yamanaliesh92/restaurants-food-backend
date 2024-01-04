@@ -1,6 +1,6 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { Test, TestingModule } from '@nestjs/testing';
-import { LoginCommand } from '../../command/login/login.coomand';
+import { LoginCommand } from '../../command/login/login.command';
 import { CommandBusMock } from '../../mock/commandMock/createUser.mock';
 import { UserController } from '../../user.controller';
 import { expect } from '@jest/globals';

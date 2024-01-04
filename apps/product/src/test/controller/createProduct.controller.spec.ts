@@ -1,6 +1,6 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { Test, TestingModule } from '@nestjs/testing';
-import { CreateProductCommand } from '../../command/create_order/create_order.command';
+import { CreateProductCommand } from '../../command/create-order/create_order.command';
 import { Product } from '../../db/entity/order.entity';
 import { CommandBusMocks } from '../../mock/commandBus.mock';
 import { expect } from '@jest/globals';

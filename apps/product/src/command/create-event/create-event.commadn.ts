@@ -22,16 +22,14 @@ export class CreateEventCommand {
   restaurantId: number;
 
   constructor(data: CreateEventCommandData) {
-    if (data) {
-      this.category = data.category;
-      this.imgOrder = data.imgOrder;
-      this.description = data.description;
-      this.name = data.name;
-      this.restaurantId = data.restaurantId;
-      this.newPrice = data.newPrice;
-      this.oldPrice = data.oldPrice;
-      this.date = data.date;
-      this.userId = data.userId;
-    }
+    this.category = data.category;
+    this.imgOrder = data.imgOrder;
+    this.description = data.description;
+    this.name = data.name;
+    this.restaurantId = data.restaurantId;
+    this.newPrice = data.newPrice;
+    this.oldPrice = data.oldPrice;
+    this.date = data.date;
+    this.userId = data.userId;
   }
 }

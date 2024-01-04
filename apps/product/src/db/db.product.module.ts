@@ -5,7 +5,7 @@ import { OrderDoa } from './doa/order.doa';
 import { OrderEntity } from './entity/order.entity';
 import { RestaurantDoa } from './doa/restaurant.doa';
 import { RestaurantEntity } from './entity/restaurant.entity';
-import { ModelMapperServiceRestaurant } from './service/modelMapper.resturant.service';
+import { ModelMapperServiceRestaurant } from './service/modelMapper.restaurant.service';
 import { ModelMapperServiceOrder } from './service/modelMapperOrder.service';
 import { EventDoa } from './doa/event.doa';
 import { ModelMapperServiceEvent } from './service/modelMapperEvent.service';

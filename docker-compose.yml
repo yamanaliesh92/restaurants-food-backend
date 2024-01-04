@@ -15,6 +15,11 @@ services:
     ports:
       - '3000:3002'
     command: ['nest', 'start', '--watch', 'user']
+    environment:
+      - DB_PASSWORD=economic_password
+      - DB_USER=economic-username
+      - DB_NAME=economic_database
+      - DB_HOST=user_db
 
   gateway:
     profiles:

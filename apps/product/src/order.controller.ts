@@ -4,9 +4,9 @@ import {
   Controller,
   Delete,
   Get,
-  Inject,
   InternalServerErrorException,
   Logger,
+  NotFoundException,
   Param,
   Patch,
   Post,
@@ -15,48 +15,49 @@ import {
   UploadedFile,
   UseGuards,
   UseInterceptors,
-  ValidationPipe,
 } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
-import { EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { FileInterceptor } from '@nestjs/platform-express';
 
-import { CreateOrderCommand } from './command/create_order/create_order.command';
+import { CreateOrderCommand } from './command/create-order/create_order.command';
 import { DeleteOrderCommand } from './command/delete_order/delete_order.command';
-import { GetAllOrderCommand } from './command/get_AllOrders/get_AllOrder.command';
-import { GetAllOrderCommandByUserId } from './command/get_allOrderByUserId/getAllOrdersByUserId.command';
-import { GetOneOrderCommand } from './command/get_one_order/get_one_order.command';
+import { GetOrdersQuery } from './query/get-orders/get-orders.query';
+import { GetOrdersQueryByUserId } from './query/get-user-orders/getAllOrdersByUserId.command';
+import { GetOrderQuery } from './query/get-order/get-order.query';
 import { UpdateImgOrderCommand } from './command/update-imgOrder/update.imgOrder.command';
-import { UpdateOrderCommand } from './command/update_order/upadte_order.command';
+import { UpdateOrderCommand } from './command/update_order/update-order.command';
 
-import { GetAllOrderByCategoryCommand } from './command/get-allOrderByCategory/get-allOrderByCategory.command';
-import { NotFoundApplicationException } from './error/notFound.appliaction.exception';
-import { AxiosApplicationException } from './error/axios.applaction.exception';
+import { GetOrdersByCategoryQuery } from './query/get-order-by-category/get-order-by-category.query';
+import { NotFoundApplicationException } from './error/record-not-found.application.exception';
+import { AxiosApplicationException } from './error/axios.application.exception';
 import { UpdateOrderDto } from './dto/order/update.order.dto';
 import { CreateOrderDto } from './dto/order/create.order.dto';
 import { OrderGuard } from './shared/order.guard';
 import { AuthGuard, IRequest } from 'y/lib/shared/auth.Guard';
+import { IdParamDto } from './dto/common/id-param.dto';
 
 @Controller('api/orders')
 export class OrdersController {
-  constructor(private readonly commandbus: CommandBus) {}
+  readonly #logger = new Logger(this.constructor.name);
+
+  constructor(
+    private readonly commandBus: CommandBus,
+    private readonly queryBus: QueryBus,
+  ) {}
 
   @UseGuards(AuthGuard)
   @Get(':id')
-  async getOne(@Param() { id }: GetOneOrderCommand) {
+  async getOne(@Param() { id }: GetOrderQuery) {
     try {
-      return await this.commandbus.execute(
-        new GetOneOrderCommand({
-          id: id,
-        }),
-      );
+      const query = new GetOrderQuery({ id });
+
+      return await this.queryBus.execute(query);
     } catch (err) {
       if (err instanceof NotFoundApplicationException) {
-        throw new BadRequestException('not found ');
+        throw new NotFoundException();
       }
-      throw new InternalServerErrorException(
-        'some thing went wrong try again...',
-      );
+
+      throw new InternalServerErrorException();
     }
   }
 
@@ -64,11 +65,11 @@ export class OrdersController {
   @Get()
   async getByCategory(@Query('category') category: string) {
     try {
-      return this.commandbus.execute(
-        new GetAllOrderByCategoryCommand({
-          category: category,
-        }),
-      );
+      const query = new GetOrdersByCategoryQuery({
+        category: category,
+      });
+
+      return this.queryBus.execute(query);
     } catch (err) {
       throw new InternalServerErrorException('some thing went wrong try again');
     }
@@ -78,16 +79,20 @@ export class OrdersController {
   @Get('all/orders')
   async getAll() {
     try {
-      return await this.commandbus.execute(new GetAllOrderCommand({}));
+      const query = new GetOrdersQuery({});
+
+      return await this.queryBus.execute(query);
     } catch (err) {
       throw new InternalServerErrorException('some thing went wrong try again');
     }
   }
 
   @Delete(':id')
-  async delete(@Param() { id }: DeleteOrderCommand) {
+  async delete(@Param() { id }: IdParamDto) {
     try {
-      return this.commandbus.execute(new DeleteOrderCommand({ id: id }));
+      const cmd = new DeleteOrderCommand({ id: id });
+
+      return this.commandBus.execute(cmd);
     } catch (err) {
       throw new InternalServerErrorException('some thing went wrong try again');
     }
@@ -95,20 +100,17 @@ export class OrdersController {
 
   @UseGuards(AuthGuard, OrderGuard)
   @Patch(':id')
-  updateOrder(
-    @Body() body: UpdateOrderDto,
-    @Param() { id }: UpdateOrderCommand,
-  ) {
+  updateOrder(@Body() body: UpdateOrderDto, @Param() { id }: IdParamDto) {
     try {
-      return this.commandbus.execute(
-        new UpdateOrderCommand({
-          id: id,
-          name: body.name,
-          price: body.price,
-          category: body.category,
-          description: body.description,
-        }),
-      );
+      const cmd = new UpdateOrderCommand({
+        id: id,
+        name: body.name,
+        price: body.price,
+        category: body.category,
+        description: body.description,
+      });
+
+      return this.commandBus.execute(cmd);
     } catch (err) {
       throw new InternalServerErrorException('some thing went wrong try again');
     }
@@ -118,16 +120,16 @@ export class OrdersController {
   @Patch('updateImg/:id')
   @UseInterceptors(FileInterceptor('imgOrder'))
   updateImgOrder(
-    @Param('id') id: number,
+    @Param() { id }: IdParamDto,
     @UploadedFile() img: Express.Multer.File,
   ) {
     try {
-      return this.commandbus.execute(
-        new UpdateImgOrderCommand({
-          id: id,
-          imgOrder: img.buffer.toString('base64'),
-        }),
-      );
+      const cmd = new UpdateImgOrderCommand({
+        id: id,
+        imgOrder: img.buffer.toString('base64'),
+      });
+
+      return this.commandBus.execute(cmd);
     } catch (err) {
       if (err instanceof AxiosApplicationException) {
         throw new BadRequestException(
@@ -142,9 +144,9 @@ export class OrdersController {
   @Get('all/userId')
   async getAllOrder(@Req() user: IRequest) {
     try {
-      return this.commandbus.execute(
-        new GetAllOrderCommandByUserId({ userId: user.user.id }),
-      );
+      const query = new GetOrdersQueryByUserId({ userId: user.user.id });
+
+      return await this.queryBus.execute(query);
     } catch (err) {
       throw new InternalServerErrorException('some thing went wrong try again');
     }
@@ -159,18 +161,20 @@ export class OrdersController {
     @Req() user: IRequest,
   ) {
     try {
-      return await this.commandbus.execute(
-        new CreateOrderCommand({
-          name: body.name,
-          restaurantId: body.restaurantId,
-          imgOrder: img.buffer.toString('base64'),
-          userId: user.user.id,
-          description: body.description,
-          category: body.category,
-          price: body.price,
-        }),
-      );
+      const cmd = new CreateOrderCommand({
+        name: body.name,
+        restaurantId: body.restaurantId,
+        imgOrder: img.buffer.toString('base64'),
+        userId: user.user.id,
+        description: body.description,
+        category: body.category,
+        price: body.price,
+      });
+
+      return await this.commandBus.execute(cmd);
     } catch (error) {
+      this.#logger.error('Error during creating order', error);
+
       if (error instanceof AxiosApplicationException) {
         throw new BadRequestException(
           'some thing went wrong in upload img order try again...',

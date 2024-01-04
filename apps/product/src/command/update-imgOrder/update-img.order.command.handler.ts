@@ -6,8 +6,8 @@ import { AxiosError } from 'axios';
 import { lastValueFrom } from 'rxjs';
 import { URLSearchParams } from 'url';
 import { OrderDoa } from '../../db/doa/order.doa';
-import { AxiosApplicationException } from '../../error/axios.applaction.exception';
-import { UnKnowApplicationException } from '../../error/unKnow.appliaction.exception';
+import { AxiosApplicationException } from '../../error/axios.application.exception';
+import { UnKnowApplicationException } from '../../error/unknown.application.exception';
 import { UpdateImgOrderCommand } from './update.imgOrder.command';
 
 @CommandHandler(UpdateImgOrderCommand)

@@ -12,8 +12,8 @@ import { EventDto } from '../../db/dto/event.dto';
 
 import { ModelMapperServiceEvent } from '../../db/service/modelMapperEvent.service';
 
-import { AxiosApplicationException } from '../../error/axios.applaction.exception';
-import { UnKnowApplicationException } from '../../error/unKnow.appliaction.exception';
+import { AxiosApplicationException } from '../../error/axios.application.exception';
+import { UnKnowApplicationException } from '../../error/unknown.application.exception';
 import { CreateEventCommand } from './create-event.commadn';
 
 @CommandHandler(CreateEventCommand)
