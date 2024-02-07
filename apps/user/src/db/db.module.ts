@@ -4,14 +4,13 @@ import { ModelMapperService } from './service/modelMapper.service';
 import { UserDoa } from './doa/user.doa';
 import { UserEntity } from './entity/user.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { DatabaseConfig } from '../config';
+// import { DatabaseConfig } from '../config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       cache: true,
-      load: [DatabaseConfig],
     }),
 
     TypeOrmModule.forRootAsync({
