@@ -17,6 +17,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import 'multer';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 import { CreateOrderCommand } from './command/create-order/create_order.command';

@@ -9,7 +9,7 @@ import { Jwt } from 'y/lib/shared/jwt.service';
 
 import { CreateUserCommandHandler } from './command/create-user/create-user.command.handler';
 
-import { GetOneUserCommandHandler } from './query/get-user/get-user.query.handler';
+import { GetOneUserQueryHandler } from './query/get-user/get-user.query.handler';
 import { LoginCommandHandler } from './command/login/login.command.handler';
 
 import { UpdateUserCommandHandler } from './command/update-user/update_user.command.handler';
@@ -29,7 +29,7 @@ import { UserService } from './user.service';
     UpdateUserCommandHandler,
     JwtService,
     LoginCommandHandler,
-    GetOneUserCommandHandler,
+    GetOneUserQueryHandler,
   ],
 })
 export class UserModule {}

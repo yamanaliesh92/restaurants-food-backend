@@ -7,7 +7,7 @@ interface CreateEventEntityDtoData {
   category: string;
   restaurantId: number;
   userId: number;
-  date: Date;
+  date: string;
 }
 
 export class CreateEventEntityDto {
@@ -19,7 +19,7 @@ export class CreateEventEntityDto {
   category: string;
   restaurantId: number;
   userId: number;
-  date: Date;
+  date: string;
 
   constructor(data: CreateEventEntityDtoData) {
     if (data) {

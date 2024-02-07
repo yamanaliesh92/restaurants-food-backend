@@ -62,7 +62,7 @@ export class CreateEventCommandHandler
         name: command.name,
         newPrice: command.newPrice,
         oldPrice: command.oldPrice,
-        date: command.date,
+        date: command.date as string,
         userId: command.userId,
         description: command.description,
         restaurantId: command.restaurantId,

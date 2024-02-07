@@ -5,7 +5,6 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { JwtService } from '@nestjs/jwt';
 
 import { CreateRestaurantCommandHandler } from './command/create-restaurant/create-restaurant.command.handler';
-
 import { CreateOrderCommandHandler } from './command/create-order/create_order.command.handler';
 import { DeleteOrderCommandHandler } from './command/delete_order/delete_order.command.handler';
 import { GetOneRestaurantQueryHandler } from './query/get-one-restaurant/get-one-restaurant.query.handler';
@@ -27,11 +26,12 @@ import { CreateEventCommandHandler } from './command/create-event/create-event.c
 import { EventsController } from './event.controller';
 import { GetAllEventQueryHandler } from './query/get-all-event/get-all-event.query.handler';
 import { DeleteEventCommandHandler } from './command/delete-event/delete-event.command.handler';
-import { UpdateEventCommandHandler } from './command/update-event/update.event.command.handler';
+
 import { GetUserEVentsQueryHandler } from './query/get-user-events/get-user-events.query.handler';
 import { UpdateRestaurantInfoCommandHandler } from './command/update-restaurant/update.restaurant.info.command.handler';
 import { GetOneEventQueryHandler } from './query/get-one-event/get-one.event.query.handler';
 import { Jwt } from 'y/lib/shared/jwt.service';
+import { UpdateImgEventCommandHandler } from './command/update-img-event/update.img.event.command.handler';
 
 @Module({
   imports: [DbProductModule, HttpModule, CqrsModule, ConfigModule.forRoot()],
@@ -49,7 +49,7 @@ import { Jwt } from 'y/lib/shared/jwt.service';
     GetOneEventQueryHandler,
     DeleteEventCommandHandler,
     UpdateImgOrderCommandHandler,
-    UpdateEventCommandHandler,
+    UpdateImgEventCommandHandler,
     GetAllRestaurantQueryHandler,
     GetAllEventQueryHandler,
     GetAllOrdersByCategoryQueryHandler,

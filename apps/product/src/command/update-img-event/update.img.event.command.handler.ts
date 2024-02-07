@@ -11,7 +11,7 @@ import { UnKnowApplicationException } from '../../error/unknown.application.exce
 import { UpdateImgEventCommand } from './update.img.event.command';
 
 @CommandHandler(UpdateImgEventCommand)
-export class UpdateEventCommandHandler
+export class UpdateImgEventCommandHandler
   implements ICommandHandler<UpdateImgEventCommand>
 {
   constructor(

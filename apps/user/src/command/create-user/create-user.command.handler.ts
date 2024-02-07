@@ -1,7 +1,5 @@
-import { HttpService } from '@nestjs/axios';
 import { Logger } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { AxiosError } from 'axios';
 import { Bc } from 'y/lib/shared/bc.service';
 import { IPayloadJwt, Jwt } from 'y/lib/shared/jwt.service';
 
@@ -10,7 +8,7 @@ import { CreateUserEntityDto } from '../../db/dto/create-user.entity.dto';
 import { UniqueConstraintViolationDataAccessException } from '../../db/errors/unique-constraint-violation.exception';
 
 import { ModelMapperService } from '../../db/service/modelMapper.service';
-import { AxiosErrorApplicationException } from '../../error/axios.application.exception';
+
 import { UnKnowErrorApplicationException } from '../../error/unknown.error.application.exception';
 import { UserAlreadyExistApplicationException } from '../../error/user.already.exist.application';
 

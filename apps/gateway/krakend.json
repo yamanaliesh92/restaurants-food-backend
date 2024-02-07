@@ -281,6 +281,38 @@
       },
       "output_encoding": "no-op",
       "input_headers": [
+        "User-Agent",
+        "Accept",
+        "authorization",
+        "Authorization",
+        "Refresh",
+        "Content-Type",
+        "Content-Length"
+      ],
+      "backend": [
+        {
+          "url_pattern": "/api/users/payment/amount",
+          "method": "POST",
+
+          "host": ["http://user:3000"],
+          "extra_config": { "backend/http": { "return_error_code": true } }
+        }
+      ],
+
+      "endpoint": "/api/auth/pay/checkout",
+      "method": "POST"
+    },
+
+    {
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "client_max_rate": 20,
+          "every": "1s",
+          "strategy": "ip"
+        }
+      },
+      "output_encoding": "no-op",
+      "input_headers": [
         "authorization",
         "Authorization",
         "Refresh",

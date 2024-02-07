@@ -49,7 +49,7 @@ export class Jwt {
 
       return await this.jwtService.signAsync(payload, {
         secret,
-        expiresIn: '10h',
+        expiresIn: '1d',
       });
     } catch (err) {
       throw new InternalServerErrorException(err);

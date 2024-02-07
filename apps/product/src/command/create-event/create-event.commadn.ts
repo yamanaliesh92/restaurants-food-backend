@@ -8,13 +8,13 @@ interface CreateEventCommandData {
   restaurantId: number;
   newPrice: number;
   oldPrice: number;
-  date: Date;
+  date: string;
 }
 export class CreateEventCommand {
   name: string;
   newPrice: number;
   oldPrice: number;
-  date: Date;
+  date: string;
   imgOrder: string;
   description: string;
   category: string;

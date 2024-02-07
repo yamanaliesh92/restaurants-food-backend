@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "jsx": "react",
     "module": "commonjs",
     "declaration": true,
     "removeComments": true,
@@ -9,6 +10,7 @@
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
+    "types": ["node", "cypress", "Multer"],
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
@@ -18,36 +20,16 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@app/shared": [
-        "libs/shared/src"
-      ],
-      "@app/shared/*": [
-        "libs/shared/src/*"
-      ],
-      "sahredss/shareds": [
-        "libs/shareds/src"
-      ],
-      "sahredss/shareds/*": [
-        "libs/shareds/src/*"
-      ],
-      "@app/share": [
-        "libs/share/src"
-      ],
-      "@app/share/*": [
-        "libs/share/src/*"
-      ],
-      "no/sh": [
-        "libs/sh/src"
-      ],
-      "no/sh/*": [
-        "libs/sh/src/*"
-      ],
-      "y/lib": [
-        "libs/lib/src"
-      ],
-      "y/lib/*": [
-        "libs/lib/src/*"
-      ]
+      "@app/shared": ["libs/shared/src"],
+      "@app/shared/*": ["libs/shared/src/*"],
+      "sahredss/shareds": ["libs/shareds/src"],
+      "sahredss/shareds/*": ["libs/shareds/src/*"],
+      "@app/share": ["libs/share/src"],
+      "@app/share/*": ["libs/share/src/*"],
+      "no/sh": ["libs/sh/src"],
+      "no/sh/*": ["libs/sh/src/*"],
+      "y/lib": ["libs/lib/src"],
+      "y/lib/*": ["libs/lib/src/*"]
     }
   }
 }

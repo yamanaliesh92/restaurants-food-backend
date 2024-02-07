@@ -4,6 +4,7 @@ import {
   Controller,
   Get,
   InternalServerErrorException,
+  Logger,
   Patch,
   Post,
   Req,
@@ -25,10 +26,16 @@ import { UpdateUserNameDto } from './dto/update.username.dto';
 import { AxiosErrorApplicationException } from './error/axios.application.exception';
 import { UserNotFoundApplicationException } from './error/user-not-found.application.exception';
 import { UserAlreadyExistApplicationException } from './error/user.already.exist.application';
+import { SendGridService } from '@anchan828/nest-sendgrid';
+import { UserService } from './user.service';
+import { CreatePaymentDto } from './dto/payment.dto';
 
 @Controller('/api/users')
 export class UserController {
-  constructor(private readonly commanders: CommandBus) {}
+  constructor(
+    private readonly commanders: CommandBus,
+    private readonly stripeService: UserService, // private readonly sendGrid: SendGridService,
+  ) {}
 
   @Post()
   async createUser(@Body() body: CreateUserDto) {
@@ -80,6 +87,17 @@ export class UserController {
     }
   }
 
+  // @Post()
+  // async root(): Promise<void> {
+  //   await this.sendGrid.send({
+  //     to: 'test@example.com',
+  //     from: 'test@example.com',
+  //     subject: 'Sending with SendGrid is Fun',
+  //     text: 'and easy to do anywhere, even with Node.js',
+  //     html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+  //   });
+  // }
+
   @Post('login')
   async login(@Body() body: LoginUserDto) {
     try {
@@ -97,4 +115,18 @@ export class UserController {
       throw new InternalServerErrorException();
     }
   }
+
+  @Post('payment/amount')
+  checkout(@Body() body: CreatePaymentDto) {
+    // Logger.log('am', amount);
+    try {
+      return this.stripeService.checkOut(body.amount);
+    } catch (error) {
+      return error;
+    }
+  }
 }
+
+// pk_test_51OXgiuAJ4nwhwATXWoW5buXWHVfQbiojFzUfDwJG3UsbDetZqLQe9X1WTWg8uRq9ps3B3T9AjcQAis5ebo0IgHbY00XDR6KbGX;
+
+// secret-key="sk_test_51OXgiuAJ4nwhwATXX5L6YRNsZgZrZ5CZDxvm4sylrx82ur9pXlIEqx0Krai4cEYCq8RIkoy5rLx35l6ub5dNzccP00Svu5jbMa"
